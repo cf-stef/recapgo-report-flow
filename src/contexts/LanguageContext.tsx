@@ -46,6 +46,13 @@ const translations = {
     'login.createaccount': 'New here? Your first report is on us - just sign up!',
     'login.terms': 'By continuing, you agree to our Terms of Service and Privacy Policy',
     'login.backhome': '← Back to homepage',
+    
+    // Sign Up
+    'signup.welcome': 'Create Your Account',
+    'signup.subtitle': 'Join professionals who save 3+ hours weekly',
+    'signup.google': 'Sign up with Google',
+    'signup.microsoft': 'Sign up with Microsoft',
+    'signup.terms': 'By signing up, you agree to our Terms of Service and Privacy Policy',
   },
   nl: {
     // Navigation
@@ -82,6 +89,13 @@ const translations = {
     'login.createaccount': 'Nieuw hier? Uw eerste rapport is gratis - registreer gewoon!',
     'login.terms': 'Door door te gaan, gaat u akkoord met onze Servicevoorwaarden en Privacybeleid',
     'login.backhome': '← Terug naar homepage',
+    
+    // Sign Up
+    'signup.welcome': 'Maak Uw Account',
+    'signup.subtitle': 'Word lid van professionals die wekelijks 3+ uur besparen',
+    'signup.google': 'Registreren met Google',
+    'signup.microsoft': 'Registreren met Microsoft',
+    'signup.terms': 'Door te registreren gaat u akkoord met onze Servicevoorwaarden en Privacybeleid',
   },
   fr: {
     // Navigation
@@ -118,6 +132,13 @@ const translations = {
     'login.createaccount': 'Nouveau ici? Votre premier rapport est offert - inscrivez-vous!',
     'login.terms': 'En continuant, vous acceptez nos Conditions de Service et Politique de Confidentialité',
     'login.backhome': '← Retour à l\'accueil',
+    
+    // Sign Up
+    'signup.welcome': 'Créez Votre Compte',
+    'signup.subtitle': 'Rejoignez les professionnels qui économisent 3+ heures par semaine',
+    'signup.google': 'S\'inscrire avec Google',
+    'signup.microsoft': 'S\'inscrire avec Microsoft',
+    'signup.terms': 'En vous inscrivant, vous acceptez nos Conditions de Service et Politique de Confidentialité',
   },
   de: {
     // Navigation
@@ -154,6 +175,13 @@ const translations = {
     'login.createaccount': 'Neu hier? Ihr erster Bericht ist kostenlos - registrieren Sie sich einfach!',
     'login.terms': 'Durch Fortfahren stimmen Sie unseren Nutzungsbedingungen und Datenschutzrichtlinien zu',
     'login.backhome': '← Zurück zur Homepage',
+    
+    // Sign Up
+    'signup.welcome': 'Erstellen Sie Ihr Konto',
+    'signup.subtitle': 'Werden Sie Teil der Profis, die wöchentlich 3+ Stunden sparen',
+    'signup.google': 'Mit Google Registrieren',
+    'signup.microsoft': 'Mit Microsoft Registrieren',
+    'signup.terms': 'Durch die Registrierung stimmen Sie unseren Nutzungsbedingungen und Datenschutzrichtlinien zu',
   },
   es: {
     // Navigation
@@ -190,6 +218,13 @@ const translations = {
     'login.createaccount': '¿Nuevo aquí? Su primer informe es gratis - ¡solo regístrese!',
     'login.terms': 'Al continuar, acepta nuestros Términos de Servicio y Política de Privacidad',
     'login.backhome': '← Volver al inicio',
+    
+    // Sign Up
+    'signup.welcome': 'Cree Su Cuenta',
+    'signup.subtitle': 'Únase a profesionales que ahorran 3+ horas semanalmente',
+    'signup.google': 'Registrarse con Google',
+    'signup.microsoft': 'Registrarse con Microsoft',
+    'signup.terms': 'Al registrarse, acepta nuestros Términos de Servicio y Política de Privacidad',
   }
 };
 
