@@ -122,6 +122,24 @@ const Dashboard = () => {
     return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
   };
 
+  const calculateCost = (seconds: number) => {
+    const hours = seconds / 3600;
+    return hours * 0.89;
+  };
+
+  const cancelRecording = () => {
+    setIsRecording(false);
+    setIsPaused(false);
+    setRecordingTime(0);
+    if ((window as any).recordingTimer) {
+      clearInterval((window as any).recordingTimer);
+    }
+    toast({
+      title: "Recording cancelled",
+      description: "Your recording has been cancelled",
+    });
+  };
+
   return (
     <div className="min-h-screen bg-gradient-hero">
       {/* Header */}
@@ -291,35 +309,45 @@ const Dashboard = () => {
                       )}
                     </Button>
                     {isRecording && (
-                      <Button
-                        size="lg"
-                        variant="outline"
-                        className="w-16 h-16 rounded-full"
-                        onClick={() => {
-                          setIsPaused(!isPaused);
-                          if (isPaused) {
-                            // Resume recording
-                            const timer = setInterval(() => {
-                              setRecordingTime(prev => {
-                                const newTime = prev + 1;
-                                if (newTime >= 14400) {
-                                  stopRecording();
-                                  return prev;
-                                }
-                                return newTime;
-                              });
-                            }, 1000);
-                            (window as any).recordingTimer = timer;
-                          } else {
-                            // Pause recording
-                            if ((window as any).recordingTimer) {
-                              clearInterval((window as any).recordingTimer);
+                      <>
+                        <Button
+                          size="lg"
+                          variant="outline"
+                          className="w-16 h-16 rounded-full"
+                          onClick={() => {
+                            setIsPaused(!isPaused);
+                            if (isPaused) {
+                              // Resume recording
+                              const timer = setInterval(() => {
+                                setRecordingTime(prev => {
+                                  const newTime = prev + 1;
+                                  if (newTime >= 14400) {
+                                    stopRecording();
+                                    return prev;
+                                  }
+                                  return newTime;
+                                });
+                              }, 1000);
+                              (window as any).recordingTimer = timer;
+                            } else {
+                              // Pause recording
+                              if ((window as any).recordingTimer) {
+                                clearInterval((window as any).recordingTimer);
+                              }
                             }
-                          }
-                        }}
-                      >
-                        {isPaused ? <Play className="w-6 h-6" /> : <Pause className="w-6 h-6" />}
-                      </Button>
+                          }}
+                        >
+                          {isPaused ? <Play className="w-6 h-6" /> : <Pause className="w-6 h-6" />}
+                        </Button>
+                        <Button
+                          size="lg"
+                          variant="destructive"
+                          className="w-16 h-16 rounded-full"
+                          onClick={cancelRecording}
+                        >
+                          ✕
+                        </Button>
+                      </>
                     )}
                   </div>
                   <p className="text-lg font-semibold">
@@ -333,6 +361,16 @@ const Dashboard = () => {
                       : t('dashboard.clickstart')
                     }
                   </p>
+                  {isRecording && recordingTime > 0 && (
+                    <div className="mt-2 p-2 bg-blue-50 rounded-md border border-blue-200">
+                      <p className="text-sm text-blue-800 font-medium">
+                        Estimated cost: €{calculateCost(recordingTime).toFixed(2)}
+                      </p>
+                      <p className="text-xs text-blue-600">
+                        €0.89 per hour
+                      </p>
+                    </div>
+                  )}
                   {recordingTime > 14400 && (
                     <p className="text-xs text-red-600 mt-1">
                       {t('dashboard.maxtime')}
@@ -377,6 +415,14 @@ const Dashboard = () => {
                       <p className="text-xs text-slate-gray">
                         {(selectedFile.size / 1024 / 1024).toFixed(2)} MB
                       </p>
+                      <div className="mt-2 p-2 bg-blue-50 rounded border border-blue-200">
+                        <p className="text-sm text-blue-800 font-medium">
+                          Processing cost: €0.89
+                        </p>
+                        <p className="text-xs text-blue-600">
+                          Flat rate per file
+                        </p>
+                      </div>
                     </div>
                     <div className="flex space-x-2">
                       <Button 

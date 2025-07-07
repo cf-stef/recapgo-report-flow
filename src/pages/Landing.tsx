@@ -30,14 +30,14 @@ const Landing = () => {
       <div className="container mx-auto px-4 py-12 lg:py-20">
         <div className="text-center max-w-5xl mx-auto">
           <div className="animate-fade-in">
-            <div className="inline-flex items-center gap-2 bg-white/80 backdrop-blur-sm rounded-full px-4 py-2 text-sm font-medium text-deep-navy mb-8 border border-electric-blue/20">
+            <div className="inline-flex items-center gap-2 bg-white/80 backdrop-blur-sm rounded-full px-4 py-2 text-sm font-medium text-deep-navy mb-8 border border-electric-blue/20 hover:scale-105 transition-all duration-500 hover:shadow-lg">
               <Timer className="w-4 h-4 text-primary" />
               {t('landing.hero.badge')}
             </div>
             
-            <h1 className="text-4xl sm:text-5xl lg:text-7xl font-bold text-deep-navy mb-6 leading-tight">
+            <h1 className="text-4xl sm:text-5xl lg:text-7xl font-bold text-deep-navy mb-6 leading-tight transform transition-all duration-700 hover:scale-[1.02]">
               {t('landing.hero.title')}
-              <span className="block text-transparent bg-clip-text bg-gradient-primary">
+              <span className="block text-transparent bg-clip-text bg-gradient-primary animate-pulse">
                 {t('landing.hero.subtitle')}
               </span>
             </h1>
@@ -50,24 +50,24 @@ const Landing = () => {
               <Link to="/login">
                 <Button 
                   size="lg" 
-                  className="text-base sm:text-lg px-8 py-4 bg-gradient-primary hover:scale-105 transition-all duration-300 shadow-button group w-full sm:w-auto"
+                  className="text-base sm:text-lg px-8 py-4 bg-gradient-primary hover:scale-105 hover:shadow-2xl transition-all duration-500 shadow-button group w-full sm:w-auto hover:shadow-primary/25"
                 >
                   {t('landing.hero.cta')}
-                  <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
+                  <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-2 transition-all duration-300" />
                 </Button>
               </Link>
-              <p className="text-sm text-slate-gray">{t('landing.hero.nocardreq')}</p>
+              <p className="text-sm text-slate-gray animate-pulse">{t('landing.hero.nocardreq')}</p>
             </div>
           </div>
           
           {/* Hero Visual Flow - Mobile Optimized */}
-          <div className="animate-fade-in bg-white/80 backdrop-blur-sm rounded-3xl shadow-soft p-6 sm:p-8 max-w-4xl mx-auto border border-electric-blue/10">
+          <div className="animate-fade-in bg-white/80 backdrop-blur-sm rounded-3xl shadow-soft p-6 sm:p-8 max-w-4xl mx-auto border border-electric-blue/10 hover:shadow-xl hover:bg-white/90 transition-all duration-500 transform hover:-translate-y-2">
             <div className="flex flex-col sm:flex-row items-center justify-center gap-6 sm:gap-8">
               <div className="text-center group">
-                <div className="w-16 h-16 sm:w-20 sm:h-20 bg-gradient-primary rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-all duration-300 shadow-button">
+                <div className="w-16 h-16 sm:w-20 sm:h-20 bg-gradient-primary rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 group-hover:rotate-3 transition-all duration-500 shadow-button group-hover:shadow-xl">
                   <Mic className="w-8 h-8 sm:w-10 sm:h-10 text-white" />
                 </div>
-                <p className="text-sm sm:text-base font-medium text-deep-navy">Record or Upload</p>
+                <p className="text-sm sm:text-base font-medium text-deep-navy group-hover:text-primary transition-colors duration-300">Record or Upload</p>
                 <p className="text-xs text-slate-gray">Any audio format</p>
               </div>
               
@@ -79,10 +79,10 @@ const Landing = () => {
               </div>
               
               <div className="text-center group">
-                <div className="w-16 h-16 sm:w-20 sm:h-20 bg-gradient-primary rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-all duration-300 shadow-button">
+                <div className="w-16 h-16 sm:w-20 sm:h-20 bg-gradient-primary rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 group-hover:rotate-3 transition-all duration-500 shadow-button group-hover:shadow-xl">
                   <Zap className="w-8 h-8 sm:w-10 sm:h-10 text-white" />
                 </div>
-                <p className="text-sm sm:text-base font-medium text-deep-navy">AI Processing</p>
+                <p className="text-sm sm:text-base font-medium text-deep-navy group-hover:text-primary transition-colors duration-300">AI Processing</p>
                 <p className="text-xs text-slate-gray">Under 60 seconds</p>
               </div>
               
@@ -94,10 +94,10 @@ const Landing = () => {
               </div>
               
               <div className="text-center group">
-                <div className="w-16 h-16 sm:w-20 sm:h-20 bg-gradient-primary rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-all duration-300 shadow-button">
+                <div className="w-16 h-16 sm:w-20 sm:h-20 bg-gradient-primary rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 group-hover:rotate-3 transition-all duration-500 shadow-button group-hover:shadow-xl">
                   <Mail className="w-8 h-8 sm:w-10 sm:h-10 text-white" />
                 </div>
-                <p className="text-sm sm:text-base font-medium text-deep-navy">Professional Report</p>
+                <p className="text-sm sm:text-base font-medium text-deep-navy group-hover:text-primary transition-colors duration-300">Professional Report</p>
                 <p className="text-xs text-slate-gray">Delivered to email</p>
               </div>
             </div>
