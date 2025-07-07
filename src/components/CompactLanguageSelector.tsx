@@ -7,6 +7,8 @@ const CompactLanguageSelector = () => {
   const { language, setLanguage } = useLanguage();
   const { currency, setCurrency } = useCurrency();
 
+  console.log('CompactLanguageSelector render - language:', language, 'currency:', currency);
+
   const languages = [
     { code: 'en' as Language, flag: '🇺🇸' },
     { code: 'nl' as Language, flag: '🇳🇱' },
@@ -24,12 +26,16 @@ const CompactLanguageSelector = () => {
   const currentCurrency = currencies.find(curr => curr.code === currency);
 
   const handleValueChange = (value: string) => {
+    console.log('HandleValueChange called with:', value);
+    
     // Check if it's a language code
     if (languages.some(lang => lang.code === value)) {
+      console.log('Setting language to:', value);
       setLanguage(value as Language);
     }
     // Check if it's a currency code
     else if (currencies.some(curr => curr.code === value)) {
+      console.log('Setting currency to:', value);
       setCurrency(value as Currency);
     }
   };
@@ -39,7 +45,7 @@ const CompactLanguageSelector = () => {
       <SelectTrigger className="w-16 h-8 p-1 bg-white/80 backdrop-blur-sm border-electric-blue/20 hover:bg-white/90 transition-colors">
         <SelectValue>
           <div className="flex items-center gap-1">
-            <span className="text-sm">{currentLanguage?.flag}</span>
+            <span className="text-sm">{currentLanguage?.flag || '🇳🇱'}</span>
             {currentCurrency?.code === 'USD' ? (
               <DollarSign className="w-3 h-3" />
             ) : (
