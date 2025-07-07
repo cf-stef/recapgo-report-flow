@@ -172,9 +172,9 @@ const Dashboard = () => {
                         </Button>
                       </div>
 
-                      {/* Demo Top Up Section */}
+                      {/* One-Time Top Up Section */}
                       <div>
-                        <h3 className="font-semibold mb-3">Demo Top Up (EUR)</h3>
+                        <h3 className="font-semibold mb-3">Quick Top Up (EUR)</h3>
                         <div className="grid grid-cols-3 gap-2 mb-3">
                           {[5, 10, 25].map(amount => (
                             <Button
@@ -187,41 +187,44 @@ const Dashboard = () => {
                           ))}
                         </div>
                         <Button onClick={handleTopUp} className="w-full">
-                          Add €{topUpAmount} EUR (Demo)
+                          Add €{topUpAmount} EUR
                         </Button>
                       </div>
 
                       {/* Auto Top-Up Section */}
                       <div className="border-t pt-4">
-                        <h3 className="font-semibold mb-3">Auto Top-Up Settings</h3>
+                        <h3 className="font-semibold mb-3">Auto Top-Up Settings (EUR)</h3>
                         <div className="space-y-3">
                           <div className="grid grid-cols-2 gap-3">
                             <div>
-                              <Label className="text-xs">If balance falls below</Label>
+                              <Label className="text-xs">If balance falls below (EUR)</Label>
                               <Input
                                 type="number"
                                 value={autoTopUp.threshold}
                                 onChange={(e) => setAutoTopUp({...autoTopUp, threshold: Number(e.target.value)})}
                                 className="h-8"
+                                placeholder="€2.00"
                               />
                             </div>
                             <div>
-                              <Label className="text-xs">Top up by</Label>
+                              <Label className="text-xs">Top up by (EUR)</Label>
                               <Input
                                 type="number"
                                 value={autoTopUp.amount}
                                 onChange={(e) => setAutoTopUp({...autoTopUp, amount: Number(e.target.value)})}
                                 className="h-8"
+                                placeholder="€10.00"
                               />
                             </div>
                           </div>
                           <div>
-                            <Label className="text-xs">Monthly cap</Label>
+                            <Label className="text-xs">Monthly cap (EUR)</Label>
                             <Input
                               type="number"
                               value={autoTopUp.cap}
                               onChange={(e) => setAutoTopUp({...autoTopUp, cap: Number(e.target.value)})}
                               className="h-8"
+                              placeholder="€50.00"
                             />
                           </div>
                           <Button variant="outline" size="sm" className="w-full">
