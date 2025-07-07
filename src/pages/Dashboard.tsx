@@ -1,6 +1,7 @@
 import { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import Logo from "@/components/Logo";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -111,10 +112,10 @@ const Dashboard = () => {
   return (
     <div className="min-h-screen bg-gradient-hero">
       {/* Header */}
-      <header className="bg-white shadow-sm">
+      <header className="bg-white/80 backdrop-blur-sm shadow-soft border-b border-sky-tint">
         <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-          <h1 className="text-2xl font-bold text-deep-navy">RecapGo</h1>
-          <Button variant="ghost" size="sm" onClick={handleLogout}>
+          <Logo size="small" />
+          <Button variant="ghost" size="sm" onClick={handleLogout} className="hover:bg-sky-tint/50 transition-colors">
             <LogOut className="w-4 h-4 mr-2" />
             Logout
           </Button>
@@ -122,9 +123,9 @@ const Dashboard = () => {
       </header>
 
       <div className="container mx-auto px-4 py-8">
-        <div className="max-w-2xl mx-auto">
+        <div className="max-w-2xl mx-auto animate-fade-in">
           {/* Balance Card */}
-          <Card className="mb-6 bg-sky-tint border-electric-blue/20">
+          <Card className="mb-6 bg-gradient-to-r from-sky-tint to-white border-electric-blue/20 shadow-soft hover:shadow-lg transition-all duration-300">
             <CardContent className="pt-4">
               <div className="flex justify-between items-center">
                 <div>
@@ -208,7 +209,7 @@ const Dashboard = () => {
           </Card>
           {/* Main Action Cards */}
           <div className="grid md:grid-cols-2 gap-6 mb-8">
-            <Card>
+            <Card className="hover:shadow-lg transition-all duration-300 hover:-translate-y-1 bg-white/80 backdrop-blur-sm">
               <CardHeader>
                 <CardTitle className="flex items-center">
                   <Upload className="w-5 h-5 mr-2" />
@@ -268,7 +269,7 @@ const Dashboard = () => {
               </CardContent>
             </Card>
 
-            <Card>
+            <Card className="hover:shadow-lg transition-all duration-300 hover:-translate-y-1 bg-white/80 backdrop-blur-sm">
               <CardHeader>
                 <CardTitle className="flex items-center">
                   <Mic className="w-5 h-5 mr-2" />
@@ -279,7 +280,11 @@ const Dashboard = () => {
                 <div className="text-center">
                   <Button
                     size="lg"
-                    className={`w-24 h-24 rounded-full mb-4 ${isRecording ? 'bg-red-500 hover:bg-red-600' : ''}`}
+                    className={`w-24 h-24 rounded-full mb-4 transition-all duration-300 ${
+                      isRecording 
+                        ? 'bg-red-500 hover:bg-red-600 animate-pulse' 
+                        : 'bg-gradient-primary hover:scale-110 shadow-button'
+                    }`}
                     onClick={isRecording ? stopRecording : startRecording}
                   >
                     {isRecording ? (
@@ -300,7 +305,7 @@ const Dashboard = () => {
           </div>
 
           {/* Email Input */}
-          <Card className="mb-8">
+          <Card className="mb-8 hover:shadow-lg transition-all duration-300 bg-white/80 backdrop-blur-sm">
             <CardContent className="pt-6">
               <div>
                 <Label htmlFor="email">Send report to:</Label>

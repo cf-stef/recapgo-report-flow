@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Link, useNavigate } from "react-router-dom";
+import Logo from "@/components/Logo";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -21,16 +22,16 @@ const Login = () => {
 
   return (
     <div className="min-h-screen bg-gradient-hero flex items-center justify-center p-4">
-      <div className="w-full max-w-md">
+      <div className="w-full max-w-md animate-fade-in">
         {/* Logo */}
         <div className="text-center mb-8">
-          <Link to="/">
-            <h1 className="text-3xl font-bold text-deep-navy">RecapGo</h1>
+          <Link to="/" className="inline-block hover:scale-105 transition-transform duration-300">
+            <Logo />
           </Link>
         </div>
 
         {/* Login Card */}
-        <Card className="shadow-soft">
+        <Card className="shadow-soft hover:shadow-lg transition-all duration-300 border-0 bg-white/80 backdrop-blur-sm">
           <CardHeader className="text-center">
             <CardTitle className="text-2xl text-deep-navy">Welcome Back</CardTitle>
             <p className="text-slate-gray">Get started with your work email</p>
@@ -38,7 +39,7 @@ const Login = () => {
           <CardContent className="space-y-4">
             <Button 
               variant="outline" 
-              className="w-full h-12 text-base border-2" 
+              className="w-full h-12 text-base border-2 hover:scale-[1.02] transition-all duration-200 hover:shadow-md" 
               onClick={handleGoogleLogin}
             >
               <svg className="w-5 h-5 mr-3" viewBox="0 0 24 24">
@@ -52,7 +53,7 @@ const Login = () => {
             
             <Button 
               variant="outline" 
-              className="w-full h-12 text-base border-2" 
+              className="w-full h-12 text-base border-2 hover:scale-[1.02] transition-all duration-200 hover:shadow-md" 
               onClick={handleMicrosoftLogin}
             >
               <svg className="w-5 h-5 mr-3" viewBox="0 0 24 24">
@@ -74,7 +75,7 @@ const Login = () => {
             </div>
 
             <Button 
-              className="w-full h-12 text-base"
+              className="w-full h-12 text-base bg-gradient-primary hover:opacity-90 transition-all duration-200 hover:scale-[1.02] shadow-button"
               onClick={handleDemoMode}
             >
               Try Demo Mode
