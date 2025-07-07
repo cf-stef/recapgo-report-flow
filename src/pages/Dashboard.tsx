@@ -17,6 +17,8 @@ const Dashboard = () => {
   const [email, setEmail] = useState("user@company.com");
   const [balance, setBalance] = useState(5.50);
   const [topUpAmount, setTopUpAmount] = useState(10);
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [autoTopUp, setAutoTopUp] = useState({ threshold: 2, amount: 10, cap: 50 });
   
   const fileInputRef = useRef<HTMLInputElement>(null);
   const navigate = useNavigate();
@@ -49,13 +51,18 @@ const Dashboard = () => {
   const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
+      setSelectedFile(file);
       toast({
-        title: "File uploaded",
+        title: "File selected",
         description: `${file.name} is ready for processing`,
       });
-      // Auto-generate report for uploaded file
-      generateReport();
     }
+  };
+
+  const generateReportFromFile = () => {
+    if (!selectedFile) return;
+    generateReport();
+    setSelectedFile(null); // Clear after processing
   };
 
   const generateReport = () => {
@@ -107,50 +114,98 @@ const Dashboard = () => {
       <header className="bg-white shadow-sm">
         <div className="container mx-auto px-4 py-4 flex justify-between items-center">
           <h1 className="text-2xl font-bold text-deep-navy">RecapGo</h1>
-          <div className="flex items-center space-x-4">
-            <div className="text-right">
-              <p className="text-sm text-slate-gray">Current Balance</p>
-              <p className="text-lg font-semibold text-deep-navy">€{balance.toFixed(2)}</p>
-            </div>
-            <Dialog>
-              <DialogTrigger asChild>
-                <Button variant="outline" size="sm">
-                  <CreditCard className="w-4 h-4 mr-2" />
-                  Top Up
-                </Button>
-              </DialogTrigger>
-              <DialogContent>
-                <DialogHeader>
-                  <DialogTitle>Top Up Balance</DialogTitle>
-                </DialogHeader>
-                <div className="space-y-4">
-                  <div className="grid grid-cols-3 gap-2">
-                    {[5, 10, 25].map(amount => (
-                      <Button
-                        key={amount}
-                        variant={topUpAmount === amount ? "default" : "outline"}
-                        onClick={() => setTopUpAmount(amount)}
-                      >
-                        €{amount}
-                      </Button>
-                    ))}
-                  </div>
-                  <Button onClick={handleTopUp} className="w-full">
-                    Add €{topUpAmount}
-                  </Button>
-                </div>
-              </DialogContent>
-            </Dialog>
-            <Button variant="ghost" size="sm" onClick={handleLogout}>
-              <LogOut className="w-4 h-4 mr-2" />
-              Logout
-            </Button>
-          </div>
+          <Button variant="ghost" size="sm" onClick={handleLogout}>
+            <LogOut className="w-4 h-4 mr-2" />
+            Logout
+          </Button>
         </div>
       </header>
 
       <div className="container mx-auto px-4 py-8">
         <div className="max-w-2xl mx-auto">
+          {/* Balance Card */}
+          <Card className="mb-6 bg-sky-tint border-electric-blue/20">
+            <CardContent className="pt-4">
+              <div className="flex justify-between items-center">
+                <div>
+                  <p className="text-sm text-slate-gray">Current Balance</p>
+                  <p className="text-2xl font-bold text-deep-navy">€{balance.toFixed(2)}</p>
+                </div>
+                <Dialog>
+                  <DialogTrigger asChild>
+                    <Button>
+                      <CreditCard className="w-4 h-4 mr-2" />
+                      Top Up
+                    </Button>
+                  </DialogTrigger>
+                  <DialogContent className="max-w-md">
+                    <DialogHeader>
+                      <DialogTitle>Manage Balance</DialogTitle>
+                    </DialogHeader>
+                    <div className="space-y-6">
+                      {/* Top Up Section */}
+                      <div>
+                        <h3 className="font-semibold mb-3">Top Up Balance</h3>
+                        <div className="grid grid-cols-3 gap-2 mb-3">
+                          {[5, 10, 25].map(amount => (
+                            <Button
+                              key={amount}
+                              variant={topUpAmount === amount ? "default" : "outline"}
+                              onClick={() => setTopUpAmount(amount)}
+                            >
+                              €{amount}
+                            </Button>
+                          ))}
+                        </div>
+                        <Button onClick={handleTopUp} className="w-full">
+                          Add €{topUpAmount}
+                        </Button>
+                      </div>
+
+                      {/* Auto Top-Up Section */}
+                      <div className="border-t pt-4">
+                        <h3 className="font-semibold mb-3">Auto Top-Up Settings</h3>
+                        <div className="space-y-3">
+                          <div className="grid grid-cols-2 gap-3">
+                            <div>
+                              <Label className="text-xs">If balance falls below</Label>
+                              <Input
+                                type="number"
+                                value={autoTopUp.threshold}
+                                onChange={(e) => setAutoTopUp({...autoTopUp, threshold: Number(e.target.value)})}
+                                className="h-8"
+                              />
+                            </div>
+                            <div>
+                              <Label className="text-xs">Top up by</Label>
+                              <Input
+                                type="number"
+                                value={autoTopUp.amount}
+                                onChange={(e) => setAutoTopUp({...autoTopUp, amount: Number(e.target.value)})}
+                                className="h-8"
+                              />
+                            </div>
+                          </div>
+                          <div>
+                            <Label className="text-xs">Monthly cap</Label>
+                            <Input
+                              type="number"
+                              value={autoTopUp.cap}
+                              onChange={(e) => setAutoTopUp({...autoTopUp, cap: Number(e.target.value)})}
+                              className="h-8"
+                            />
+                          </div>
+                          <Button variant="outline" size="sm" className="w-full">
+                            Save Auto Top-up Settings
+                          </Button>
+                        </div>
+                      </div>
+                    </div>
+                  </DialogContent>
+                </Dialog>
+              </div>
+            </CardContent>
+          </Card>
           {/* Main Action Cards */}
           <div className="grid md:grid-cols-2 gap-6 mb-8">
             <Card>
@@ -168,17 +223,48 @@ const Dashboard = () => {
                   onChange={handleFileUpload}
                   className="hidden"
                 />
-                <Button 
-                  variant="outline" 
-                  className="w-full h-24 border-dashed border-2"
-                  onClick={() => fileInputRef.current?.click()}
-                >
-                  <div className="text-center">
-                    <Upload className="w-8 h-8 mx-auto mb-2" />
-                    <p>Choose audio file</p>
-                    <p className="text-sm text-slate-gray">MP3, WAV, M4A</p>
+                {!selectedFile ? (
+                  <Button 
+                    variant="outline" 
+                    className="w-full h-24 border-dashed border-2"
+                    onClick={() => fileInputRef.current?.click()}
+                  >
+                    <div className="text-center">
+                      <Upload className="w-8 h-8 mx-auto mb-2" />
+                      <p>Choose audio file</p>
+                      <p className="text-sm text-slate-gray">MP3, WAV, M4A</p>
+                    </div>
+                  </Button>
+                ) : (
+                  <div className="space-y-3">
+                    <div className="p-3 border rounded-md bg-sky-tint/30">
+                      <p className="text-sm font-medium text-deep-navy">{selectedFile.name}</p>
+                      <p className="text-xs text-slate-gray">
+                        {(selectedFile.size / 1024 / 1024).toFixed(2)} MB
+                      </p>
+                    </div>
+                    <div className="flex space-x-2">
+                      <Button 
+                        variant="outline" 
+                        size="sm"
+                        onClick={() => {
+                          setSelectedFile(null);
+                          if (fileInputRef.current) fileInputRef.current.value = '';
+                        }}
+                      >
+                        Remove
+                      </Button>
+                      <Button 
+                        size="sm" 
+                        className="flex-1"
+                        onClick={generateReportFromFile}
+                        disabled={isProcessing}
+                      >
+                        Generate Report
+                      </Button>
+                    </div>
                   </div>
-                </Button>
+                )}
               </CardContent>
             </Card>
 
