@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import Logo from "@/components/Logo";
 import CompactLanguageSelector from "@/components/CompactLanguageSelector";
+import CompactCurrencySelector from "@/components/CompactCurrencySelector";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -10,6 +11,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { Progress } from "@/components/ui/progress";
 import { useToast } from "@/hooks/use-toast";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useCurrency } from "@/contexts/CurrencyContext";
 import { Mic, Upload, Square, CheckCircle, CreditCard, LogOut, Pause, Play, Smartphone, Monitor } from "lucide-react";
 
 const Dashboard = () => {
@@ -29,6 +31,7 @@ const Dashboard = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
   const { t } = useLanguage();
+  const { formatCurrency, convertFromEUR } = useCurrency();
 
   const startRecording = () => {
     setIsRecording(true);
@@ -108,7 +111,7 @@ const Dashboard = () => {
     setBalance(prev => prev + topUpAmount);
     toast({
       title: "Balance topped up",
-      description: `Added €${topUpAmount} to your account`,
+      description: `Added ${formatCurrency(topUpAmount)} to your account`,
     });
   };
 
@@ -124,7 +127,8 @@ const Dashboard = () => {
 
   const calculateCost = (seconds: number) => {
     const hours = seconds / 3600;
-    return hours * 0.89;
+    const eurCost = hours * 0.89;
+    return convertFromEUR(eurCost);
   };
 
   const cancelRecording = () => {
@@ -151,7 +155,10 @@ const Dashboard = () => {
               <LogOut className="w-4 h-4 mr-2" />
               {t('nav.logout')}
             </Button>
-            <CompactLanguageSelector />
+            <div className="flex flex-col gap-1">
+              <CompactLanguageSelector />
+              <CompactCurrencySelector />
+            </div>
           </div>
         </div>
       </header>
@@ -164,7 +171,7 @@ const Dashboard = () => {
               <div className="flex justify-between items-center">
                 <div>
                   <p className="text-sm text-slate-gray">{t('dashboard.balance')}</p>
-                  <p className="text-2xl font-bold text-deep-navy">€{balance.toFixed(2)} EUR</p>
+                  <p className="text-2xl font-bold text-deep-navy">{formatCurrency(balance)}</p>
                   <p className="text-xs text-slate-gray mt-1">💳 Secure payment processing available</p>
                 </div>
                 <Dialog>
@@ -192,7 +199,7 @@ const Dashboard = () => {
 
                       {/* One-Time Top Up Section */}
                       <div>
-                        <h3 className="font-semibold mb-3">Quick Top Up (EUR)</h3>
+                        <h3 className="font-semibold mb-3">Quick Top Up</h3>
                         <div className="grid grid-cols-3 gap-2 mb-3">
                           {[5, 10, 25].map(amount => (
                             <Button
@@ -200,49 +207,49 @@ const Dashboard = () => {
                               variant={topUpAmount === amount ? "default" : "outline"}
                               onClick={() => setTopUpAmount(amount)}
                             >
-                              €{amount}
+                              {formatCurrency(amount)}
                             </Button>
                           ))}
                         </div>
                         <Button onClick={handleTopUp} className="w-full">
-                          Add €{topUpAmount} EUR
+                          Add {formatCurrency(topUpAmount)}
                         </Button>
                       </div>
 
                       {/* Auto Top-Up Section */}
                       <div className="border-t pt-4">
-                        <h3 className="font-semibold mb-3">Auto Top-Up Settings (EUR)</h3>
+                        <h3 className="font-semibold mb-3">Auto Top-Up Settings</h3>
                         <div className="space-y-3">
                           <div className="grid grid-cols-2 gap-3">
                             <div>
-                              <Label className="text-xs">If balance falls below (EUR)</Label>
+                              <Label className="text-xs">If balance falls below</Label>
                               <Input
                                 type="number"
                                 value={autoTopUp.threshold}
                                 onChange={(e) => setAutoTopUp({...autoTopUp, threshold: Number(e.target.value)})}
                                 className="h-8"
-                                placeholder="€2.00"
+                                placeholder={formatCurrency(2)}
                               />
                             </div>
                             <div>
-                              <Label className="text-xs">Top up by (EUR)</Label>
+                              <Label className="text-xs">Top up by</Label>
                               <Input
                                 type="number"
                                 value={autoTopUp.amount}
                                 onChange={(e) => setAutoTopUp({...autoTopUp, amount: Number(e.target.value)})}
                                 className="h-8"
-                                placeholder="€10.00"
+                                placeholder={formatCurrency(10)}
                               />
                             </div>
                           </div>
                           <div>
-                            <Label className="text-xs">Monthly cap (EUR)</Label>
+                            <Label className="text-xs">Monthly cap</Label>
                             <Input
                               type="number"
                               value={autoTopUp.cap}
                               onChange={(e) => setAutoTopUp({...autoTopUp, cap: Number(e.target.value)})}
                               className="h-8"
-                              placeholder="€50.00"
+                              placeholder={formatCurrency(50)}
                             />
                           </div>
                           <Button variant="outline" size="sm" className="w-full">
@@ -364,10 +371,10 @@ const Dashboard = () => {
                   {isRecording && recordingTime > 0 && (
                     <div className="mt-2 p-2 bg-blue-50 rounded-md border border-blue-200">
                       <p className="text-sm text-blue-800 font-medium">
-                        Estimated cost: €{calculateCost(recordingTime).toFixed(2)}
+                        Estimated cost: {formatCurrency(calculateCost(recordingTime))}
                       </p>
                       <p className="text-xs text-blue-600">
-                        €0.89 per hour
+                        {formatCurrency(0.89)} per hour
                       </p>
                     </div>
                   )}
@@ -417,7 +424,7 @@ const Dashboard = () => {
                       </p>
                       <div className="mt-2 p-2 bg-blue-50 rounded border border-blue-200">
                         <p className="text-sm text-blue-800 font-medium">
-                          Processing cost: €0.89
+                          Processing cost: {formatCurrency(0.89)}
                         </p>
                         <p className="text-xs text-blue-600">
                           Flat rate per file

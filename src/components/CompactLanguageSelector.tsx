@@ -21,9 +21,9 @@ const CompactLanguageSelector = () => {
           <span className="text-lg">{currentLanguage?.flag}</span>
         </SelectValue>
       </SelectTrigger>
-      <SelectContent>
+      <SelectContent className="bg-white border border-electric-blue/20 shadow-lg z-50">
         {languages.map((lang) => (
-          <SelectItem key={lang.code} value={lang.code}>
+          <SelectItem key={lang.code} value={lang.code} className="hover:bg-sky-tint/20">
             <span className="flex items-center gap-2">
               {lang.flag} {lang.code.toUpperCase()}
             </span>
