@@ -3,11 +3,13 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Mic, FileText, Mail, Users, Clock, CheckCircle, Zap, Timer, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useCurrency } from "@/contexts/CurrencyContext";
 import Logo from "@/components/Logo";
 import CompactLanguageSelector from "@/components/CompactLanguageSelector";
 
 const Landing = () => {
   const { t } = useLanguage();
+  const { formatCurrency } = useCurrency();
 
   return (
     <div className="min-h-screen bg-gradient-hero overflow-hidden">
@@ -267,13 +269,13 @@ const Landing = () => {
                     <p className="text-sm text-slate-gray">Hours/Year</p>
                   </div>
                   <div>
-                    <div className="text-2xl lg:text-3xl font-bold text-primary">€7,280</div>
+                    <div className="text-2xl lg:text-3xl font-bold text-primary">{formatCurrency(7280)}</div>
                     <p className="text-sm text-slate-gray">Value/Year*</p>
                   </div>
                 </div>
                 
                 <p className="text-xs text-slate-gray mt-4">
-                  *Based on €40/hour professional rate
+                  *Based on {formatCurrency(40)}/hour professional rate
                 </p>
               </div>
             </div>
@@ -354,11 +356,11 @@ const Landing = () => {
               <CardContent className="p-8 sm:p-12 text-center">
                 <div className="mb-8">
                   <div className="text-5xl sm:text-6xl font-bold text-transparent bg-clip-text bg-gradient-primary mb-2">
-                    €0.89
+                    {formatCurrency(0.89)}
                   </div>
                   <p className="text-lg text-slate-gray">per hour of audio</p>
                   <p className="text-sm text-slate-gray mt-2">
-                    Most meetings cost under €0.50
+                    Most meetings cost under {formatCurrency(0.50)}
                   </p>
                 </div>
                 
@@ -377,13 +379,13 @@ const Landing = () => {
                   </div>
                   <div className="flex items-center gap-3">
                     <CheckCircle className="w-5 h-5 text-primary flex-shrink-0" />
-                    <span className="text-left">Start with €2.50 free credit</span>
+                    <span className="text-left">Start with {formatCurrency(2.50)} free credit</span>
                   </div>
                 </div>
                 
                 <div className="bg-sky-tint/30 rounded-xl p-4 mb-8">
                   <p className="text-sm font-medium text-deep-navy">
-                    💡 Most 30-minute meetings = €0.45
+                    💡 Most 30-minute meetings = {formatCurrency(0.45)}
                   </p>
                 </div>
                 
@@ -422,7 +424,7 @@ const Landing = () => {
                   size="lg" 
                   className="text-lg px-12 py-4 bg-gradient-primary hover:scale-105 transition-all duration-300 shadow-button group w-full sm:w-auto"
                 >
-                  Start Free - Get €2.50 Credit
+                  Start Free - Get {formatCurrency(2.50)} Credit
                   <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
                 </Button>
               </Link>

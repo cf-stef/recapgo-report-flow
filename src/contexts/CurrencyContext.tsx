@@ -16,7 +16,15 @@ const CurrencyContext = createContext<CurrencyContextType | undefined>(undefined
 const EUR_TO_USD_RATE = 1.1;
 
 export const CurrencyProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const [currency, setCurrency] = useState<Currency>('EUR');
+  const [currency, setCurrency] = useState<Currency>(() => {
+    const saved = localStorage.getItem('currency');
+    return (saved as Currency) || 'EUR';
+  });
+
+  const handleSetCurrency = (curr: Currency) => {
+    setCurrency(curr);
+    localStorage.setItem('currency', curr);
+  };
 
   const formatCurrency = (amount: number): string => {
     const convertedAmount = convertFromEUR(amount);
@@ -39,7 +47,7 @@ export const CurrencyProvider: React.FC<{ children: ReactNode }> = ({ children }
   return (
     <CurrencyContext.Provider value={{
       currency,
-      setCurrency,
+      setCurrency: handleSetCurrency,
       formatCurrency,
       getCurrencySymbol,
       convertFromEUR,

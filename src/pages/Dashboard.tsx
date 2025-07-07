@@ -372,7 +372,7 @@ const Dashboard = () => {
                         Estimated cost: {formatCurrency(calculateCost(recordingTime))}
                       </p>
                       <p className="text-xs text-blue-600">
-                        {formatCurrency(0.89)} per hour
+                        {formatCurrency(0.89)} per hour • {formatCurrency(0.29)} minimum
                       </p>
                     </div>
                   )}
@@ -425,7 +425,7 @@ const Dashboard = () => {
                           Processing cost: {formatCurrency(0.89)}
                         </p>
                         <p className="text-xs text-blue-600">
-                          Flat rate per file
+                          {formatCurrency(0.29)} minimum charge
                         </p>
                       </div>
                     </div>
