@@ -126,7 +126,7 @@ const Dashboard = () => {
 
   const calculateCost = (seconds: number) => {
     const hours = seconds / 3600;
-    const eurCost = hours * 0.89;
+    const eurCost = Math.max(0.29, hours * 0.89); // Minimum 29 euro cents
     return convertFromEUR(eurCost);
   };
 
