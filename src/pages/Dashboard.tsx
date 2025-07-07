@@ -31,7 +31,15 @@ const Dashboard = () => {
     setIsSuccess(false); // Reset success state
     // Simulate recording timer
     const timer = setInterval(() => {
-      setRecordingTime(prev => prev + 1);
+      setRecordingTime(prev => {
+        const newTime = prev + 1;
+        // Auto-stop at 4 hours (14400 seconds)
+        if (newTime >= 14400) {
+          stopRecording();
+          return prev;
+        }
+        return newTime;
+      });
     }, 1000);
     
     // Store timer ID for cleanup
@@ -278,27 +286,50 @@ const Dashboard = () => {
               </CardHeader>
               <CardContent>
                 <div className="text-center">
-                  <Button
-                    size="lg"
-                    className={`w-24 h-24 rounded-full mb-4 transition-all duration-300 ${
-                      isRecording 
-                        ? 'bg-red-500 hover:bg-red-600 animate-pulse' 
-                        : 'bg-gradient-primary hover:scale-110 shadow-button'
-                    }`}
-                    onClick={isRecording ? stopRecording : startRecording}
-                  >
-                    {isRecording ? (
-                      <Square className="w-8 h-8" />
-                    ) : (
-                      <Mic className="w-8 h-8" />
+                  <div className="flex justify-center gap-2 mb-4">
+                    <Button
+                      size="lg"
+                      className={`w-24 h-24 rounded-full transition-all duration-300 ${
+                        isRecording 
+                          ? 'bg-red-500 hover:bg-red-600 animate-pulse' 
+                          : 'bg-gradient-primary hover:scale-110 shadow-button'
+                      }`}
+                      onClick={isRecording ? stopRecording : startRecording}
+                    >
+                      {isRecording ? (
+                        <Square className="w-8 h-8" />
+                      ) : (
+                        <Mic className="w-8 h-8" />
+                      )}
+                    </Button>
+                    {isRecording && (
+                      <Button
+                        size="lg"
+                        variant="outline"
+                        className="w-16 h-16 rounded-full"
+                        onClick={() => {
+                          // Pause functionality - toggle recording state
+                          setIsRecording(false);
+                          if ((window as any).recordingTimer) {
+                            clearInterval((window as any).recordingTimer);
+                          }
+                        }}
+                      >
+                        <Square className="w-6 h-6" />
+                      </Button>
                     )}
-                  </Button>
+                  </div>
                   <p className="text-lg font-semibold">
                     {isRecording ? formatTime(recordingTime) : "00:00"}
                   </p>
                   <p className="text-sm text-slate-gray">
-                    {isRecording ? "Recording..." : "Click to start"}
+                    {isRecording ? "Recording... (Max 4 hours)" : "Click to start"}
                   </p>
+                  {recordingTime > 14400 && ( // 4 hours = 14400 seconds
+                    <p className="text-xs text-red-600 mt-1">
+                      Maximum recording time reached
+                    </p>
+                  )}
                 </div>
               </CardContent>
             </Card>

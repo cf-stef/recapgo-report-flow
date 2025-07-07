@@ -2,20 +2,27 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Mic, FileText, Mail, Users, Clock, CheckCircle, Zap, Timer, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useLanguage } from "@/contexts/LanguageContext";
 import Logo from "@/components/Logo";
+import LanguageSelector from "@/components/LanguageSelector";
 
 const Landing = () => {
+  const { t } = useLanguage();
+
   return (
     <div className="min-h-screen bg-gradient-hero overflow-hidden">
       {/* Navigation */}
       <nav className="container mx-auto px-4 py-6">
         <div className="flex justify-between items-center">
           <Logo />
-          <Link to="/login">
-            <Button variant="outline" className="hover:scale-105 transition-all duration-300">
-              Sign In
-            </Button>
-          </Link>
+          <div className="flex items-center gap-4">
+            <LanguageSelector />
+            <Link to="/login">
+              <Button variant="outline" className="hover:scale-105 transition-all duration-300">
+                {t('nav.signin')}
+              </Button>
+            </Link>
+          </div>
         </div>
       </nav>
 
@@ -25,19 +32,18 @@ const Landing = () => {
           <div className="animate-fade-in">
             <div className="inline-flex items-center gap-2 bg-white/80 backdrop-blur-sm rounded-full px-4 py-2 text-sm font-medium text-deep-navy mb-8 border border-electric-blue/20">
               <Timer className="w-4 h-4 text-primary" />
-              Save 3+ hours per week on reports
+              {t('landing.hero.badge')}
             </div>
             
             <h1 className="text-4xl sm:text-5xl lg:text-7xl font-bold text-deep-navy mb-6 leading-tight">
-              From Meeting
+              {t('landing.hero.title')}
               <span className="block text-transparent bg-clip-text bg-gradient-primary">
-                to Report in 60 Seconds
+                {t('landing.hero.subtitle')}
               </span>
             </h1>
             
             <p className="text-lg sm:text-xl lg:text-2xl text-slate-gray mb-12 max-w-3xl mx-auto leading-relaxed">
-              Stop wasting hours writing meeting notes. Our AI transforms your conversations 
-              into professional business reports instantly.
+              {t('landing.hero.description')}
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-16">
@@ -46,11 +52,11 @@ const Landing = () => {
                   size="lg" 
                   className="text-base sm:text-lg px-8 py-4 bg-gradient-primary hover:scale-105 transition-all duration-300 shadow-button group w-full sm:w-auto"
                 >
-                  Start Free - Get €2.50 Credit
+                  {t('landing.hero.cta')}
                   <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
                 </Button>
               </Link>
-              <p className="text-sm text-slate-gray">No card required • 3 minutes to first report</p>
+              <p className="text-sm text-slate-gray">{t('landing.hero.nocardreq')}</p>
             </div>
           </div>
           
@@ -445,7 +451,7 @@ const Landing = () => {
         <div className="container mx-auto px-4">
           <div className="flex flex-col sm:flex-row justify-between items-center">
             <div className="mb-4 sm:mb-0">
-              <Logo size="small" />
+              <Logo size="small" variant="light" />
             </div>
             <div className="text-center sm:text-right">
               <p className="text-sm opacity-75">© 2024 RecapGo. All rights reserved.</p>

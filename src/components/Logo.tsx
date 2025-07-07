@@ -1,11 +1,17 @@
 import { Zap } from "lucide-react";
 
-const Logo = ({ size = "default" }: { size?: "small" | "default" | "large" }) => {
+const Logo = ({ size = "default", variant = "default" }: { 
+  size?: "small" | "default" | "large";
+  variant?: "default" | "light";
+}) => {
   const sizeClasses = {
     small: "text-xl",
     default: "text-3xl",
     large: "text-4xl"
   };
+
+  const textClasses = variant === "light" ? "text-white" : "text-deep-navy";
+  const accentClasses = variant === "light" ? "text-sky-tint" : "text-primary";
 
   return (
     <div className="flex items-center gap-2 group">
@@ -15,8 +21,8 @@ const Logo = ({ size = "default" }: { size?: "small" | "default" | "large" }) =>
           <Zap className="w-6 h-6 text-white" />
         </div>
       </div>
-      <span className={`font-bold text-deep-navy ${sizeClasses[size]} tracking-tight`}>
-        Recap<span className="text-primary">Go</span>
+      <span className={`font-bold ${textClasses} ${sizeClasses[size]} tracking-tight`}>
+        Recap<span className={accentClasses}>Go</span>
       </span>
     </div>
   );
