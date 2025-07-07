@@ -129,11 +129,11 @@ const Dashboard = () => {
         <div className="container mx-auto px-4 py-4 flex justify-between items-center">
           <Logo size="small" />
           <div className="flex items-center gap-4">
-            <CompactLanguageSelector />
             <Button variant="ghost" size="sm" onClick={handleLogout} className="hover:bg-sky-tint/50 transition-colors">
               <LogOut className="w-4 h-4 mr-2" />
               {t('nav.logout')}
             </Button>
+            <CompactLanguageSelector />
           </div>
         </div>
       </header>
@@ -147,7 +147,7 @@ const Dashboard = () => {
                 <div>
                   <p className="text-sm text-slate-gray">{t('dashboard.balance')}</p>
                   <p className="text-2xl font-bold text-deep-navy">€{balance.toFixed(2)} EUR</p>
-                  <p className="text-xs text-slate-gray mt-1">💳 Connect Stripe for seamless payments</p>
+                  <p className="text-xs text-slate-gray mt-1">💳 Secure payment processing available</p>
                 </div>
                 <Dialog>
                   <DialogTrigger asChild>
@@ -161,14 +161,14 @@ const Dashboard = () => {
                       <DialogTitle>Manage Balance & Stripe Integration</DialogTitle>
                     </DialogHeader>
                     <div className="space-y-6">
-                      {/* Stripe Integration Notice */}
+                      {/* Payment Integration Notice */}
                       <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-                        <h4 className="font-semibold text-blue-800 mb-2">🔄 Stripe Integration Required</h4>
+                        <h4 className="font-semibold text-blue-800 mb-2">💳 Secure Payment Processing</h4>
                         <p className="text-sm text-blue-700 mb-3">
-                          For real payments, connect your Stripe account to process secure transactions.
+                          Add funds to your account using secure payment processing. Your payment details are encrypted and protected.
                         </p>
                         <Button variant="outline" size="sm" className="w-full">
-                          Connect Stripe Account
+                          Set Up Payment Method
                         </Button>
                       </div>
 
@@ -276,7 +276,7 @@ const Dashboard = () => {
                       size="lg"
                       className={`w-24 h-24 rounded-full transition-all duration-300 ${
                         isRecording 
-                          ? 'bg-red-500 hover:bg-red-600 animate-pulse' 
+                          ? 'bg-red-500 hover:bg-red-600' 
                           : 'bg-gradient-primary hover:scale-110 shadow-button'
                       }`}
                       onClick={isRecording ? stopRecording : startRecording}
@@ -428,12 +428,12 @@ const Dashboard = () => {
                   <div className="w-16 h-16 bg-secondary rounded-full flex items-center justify-center mx-auto animate-pulse">
                     <Mic className="w-8 h-8 text-primary" />
                   </div>
-                  <h3 className="text-lg font-semibold text-deep-navy">
+                   <h3 className="text-lg font-semibold text-deep-navy">
                     Turning your meeting into magic...
                   </h3>
                   <Progress value={66} className="w-full" />
                   <p className="text-sm text-slate-gray">
-                    This usually takes 30-60 seconds
+                    Processing time: ~{Math.max(1, Math.ceil(recordingTime / 60))} minute{Math.ceil(recordingTime / 60) !== 1 ? 's' : ''} expected
                   </p>
                 </div>
               </CardContent>

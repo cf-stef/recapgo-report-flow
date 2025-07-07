@@ -13,7 +13,7 @@ const LanguageContext = createContext<LanguageContextType | undefined>(undefined
 const translations = {
   en: {
     // Navigation
-    'nav.signin': 'Sign In / Create Account',
+    'nav.signin': 'Sign In',
     'nav.logout': 'Logout',
     
     // Landing Page
@@ -48,7 +48,7 @@ const translations = {
   },
   nl: {
     // Navigation
-    'nav.signin': 'Inloggen / Account Aanmaken',
+    'nav.signin': 'Inloggen',
     'nav.logout': 'Uitloggen',
     
     // Landing Page
@@ -83,7 +83,7 @@ const translations = {
   },
   fr: {
     // Navigation
-    'nav.signin': 'Se Connecter / Créer un Compte',
+    'nav.signin': 'Se Connecter',
     'nav.logout': 'Déconnexion',
     
     // Landing Page
@@ -118,7 +118,7 @@ const translations = {
   },
   de: {
     // Navigation
-    'nav.signin': 'Anmelden / Konto Erstellen',
+    'nav.signin': 'Anmelden',
     'nav.logout': 'Abmelden',
     
     // Landing Page
@@ -153,7 +153,7 @@ const translations = {
   },
   es: {
     // Navigation
-    'nav.signin': 'Iniciar Sesión / Crear Cuenta',
+    'nav.signin': 'Iniciar Sesión',
     'nav.logout': 'Cerrar Sesión',
     
     // Landing Page

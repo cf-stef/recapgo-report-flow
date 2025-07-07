@@ -16,12 +16,12 @@ const Landing = () => {
         <div className="flex justify-between items-center">
           <Logo />
           <div className="flex items-center gap-4">
-            <LanguageSelector />
             <Link to="/login">
               <Button variant="outline" className="hover:scale-105 transition-all duration-300">
                 {t('nav.signin')}
               </Button>
             </Link>
+            <LanguageSelector />
           </div>
         </div>
       </nav>
