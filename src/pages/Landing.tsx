@@ -4,7 +4,7 @@ import { Mic, FileText, Mail, Users, Clock, CheckCircle, Zap, Timer, ArrowRight 
 import { Link } from "react-router-dom";
 import { useLanguage } from "@/contexts/LanguageContext";
 import Logo from "@/components/Logo";
-import LanguageSelector from "@/components/LanguageSelector";
+import CompactLanguageSelector from "@/components/CompactLanguageSelector";
 
 const Landing = () => {
   const { t } = useLanguage();
@@ -21,7 +21,7 @@ const Landing = () => {
                 {t('nav.signin')}
               </Button>
             </Link>
-            <LanguageSelector />
+            <CompactLanguageSelector />
           </div>
         </div>
       </nav>
