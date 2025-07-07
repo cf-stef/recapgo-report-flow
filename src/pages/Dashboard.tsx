@@ -1,4 +1,5 @@
 import { useState, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -6,7 +7,7 @@ import { Label } from "@/components/ui/label";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Progress } from "@/components/ui/progress";
 import { useToast } from "@/hooks/use-toast";
-import { Mic, Upload, Play, Square, CheckCircle, CreditCard, Settings, LogOut } from "lucide-react";
+import { Mic, Upload, Square, CheckCircle, CreditCard, LogOut } from "lucide-react";
 
 const Dashboard = () => {
   const [isRecording, setIsRecording] = useState(false);
@@ -16,14 +17,15 @@ const Dashboard = () => {
   const [email, setEmail] = useState("user@company.com");
   const [balance, setBalance] = useState(5.50);
   const [topUpAmount, setTopUpAmount] = useState(10);
-  const [autoTopUp, setAutoTopUp] = useState({ threshold: 2, amount: 10, cap: 50 });
   
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const navigate = useNavigate();
   const { toast } = useToast();
 
   const startRecording = () => {
     setIsRecording(true);
     setRecordingTime(0);
+    setIsSuccess(false); // Reset success state
     // Simulate recording timer
     const timer = setInterval(() => {
       setRecordingTime(prev => prev + 1);
@@ -38,6 +40,10 @@ const Dashboard = () => {
     if ((window as any).recordingTimer) {
       clearInterval((window as any).recordingTimer);
     }
+    // Auto-generate report when recording stops
+    if (recordingTime > 0) {
+      generateReport();
+    }
   };
 
   const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -47,6 +53,8 @@ const Dashboard = () => {
         title: "File uploaded",
         description: `${file.name} is ready for processing`,
       });
+      // Auto-generate report for uploaded file
+      generateReport();
     }
   };
 
@@ -81,6 +89,10 @@ const Dashboard = () => {
       title: "Balance topped up",
       description: `Added €${topUpAmount} to your account`,
     });
+  };
+
+  const handleLogout = () => {
+    navigate("/login");
   };
 
   const formatTime = (seconds: number) => {
@@ -129,11 +141,7 @@ const Dashboard = () => {
                 </div>
               </DialogContent>
             </Dialog>
-            <Button variant="ghost" size="sm">
-              <Settings className="w-4 h-4 mr-2" />
-              Settings
-            </Button>
-            <Button variant="ghost" size="sm">
+            <Button variant="ghost" size="sm" onClick={handleLogout}>
               <LogOut className="w-4 h-4 mr-2" />
               Logout
             </Button>
@@ -208,25 +216,18 @@ const Dashboard = () => {
           {/* Email Input */}
           <Card className="mb-8">
             <CardContent className="pt-6">
-              <div className="space-y-4">
-                <div>
-                  <Label htmlFor="email">Send report to:</Label>
-                  <Input
-                    id="email"
-                    type="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    placeholder="your@email.com"
-                  />
-                </div>
-                
-                <Button 
-                  className="w-full h-12 text-lg" 
-                  onClick={generateReport}
-                  disabled={isProcessing || (!isRecording && recordingTime === 0)}
-                >
-                  {isProcessing ? "Generating Report..." : "Generate Report"}
-                </Button>
+              <div>
+                <Label htmlFor="email">Send report to:</Label>
+                <Input
+                  id="email"
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="your@email.com"
+                />
+                <p className="text-sm text-slate-gray mt-2">
+                  Reports will be automatically generated when you upload a file or stop recording.
+                </p>
               </div>
             </CardContent>
           </Card>
@@ -273,46 +274,6 @@ const Dashboard = () => {
             </Card>
           )}
 
-          {/* Auto Top-up Settings */}
-          <Card>
-            <CardHeader>
-              <CardTitle>Auto Top-up Settings</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-4">
-                <div className="grid grid-cols-3 gap-4">
-                  <div>
-                    <Label>If balance falls below</Label>
-                    <Input
-                      type="number"
-                      value={autoTopUp.threshold}
-                      onChange={(e) => setAutoTopUp({...autoTopUp, threshold: Number(e.target.value)})}
-                    />
-                  </div>
-                  <div>
-                    <Label>Top up by</Label>
-                    <Input
-                      type="number"
-                      value={autoTopUp.amount}
-                      onChange={(e) => setAutoTopUp({...autoTopUp, amount: Number(e.target.value)})}
-                    />
-                  </div>
-                  <div>
-                    <Label>Monthly cap</Label>
-                    <Input
-                      type="number"
-                      value={autoTopUp.cap}
-                      onChange={(e) => setAutoTopUp({...autoTopUp, cap: Number(e.target.value)})}
-                    />
-                  </div>
-                </div>
-                <div className="flex space-x-2">
-                  <Button variant="outline">Cancel</Button>
-                  <Button>Save Auto Top-up</Button>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
         </div>
       </div>
     </div>
