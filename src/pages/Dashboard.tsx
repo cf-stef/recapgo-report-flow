@@ -2,16 +2,19 @@ import { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import Logo from "@/components/Logo";
+import CompactLanguageSelector from "@/components/CompactLanguageSelector";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Progress } from "@/components/ui/progress";
 import { useToast } from "@/hooks/use-toast";
-import { Mic, Upload, Square, CheckCircle, CreditCard, LogOut } from "lucide-react";
+import { useLanguage } from "@/contexts/LanguageContext";
+import { Mic, Upload, Square, CheckCircle, CreditCard, LogOut, Pause, Play, Smartphone, Monitor } from "lucide-react";
 
 const Dashboard = () => {
   const [isRecording, setIsRecording] = useState(false);
+  const [isPaused, setIsPaused] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [recordingTime, setRecordingTime] = useState(0);
@@ -20,10 +23,12 @@ const Dashboard = () => {
   const [topUpAmount, setTopUpAmount] = useState(10);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [autoTopUp, setAutoTopUp] = useState({ threshold: 2, amount: 10, cap: 50 });
+  const [mobileMode, setMobileMode] = useState<'record' | 'upload'>('record');
   
   const fileInputRef = useRef<HTMLInputElement>(null);
   const navigate = useNavigate();
   const { toast } = useToast();
+  const { t } = useLanguage();
 
   const startRecording = () => {
     setIsRecording(true);
@@ -123,10 +128,13 @@ const Dashboard = () => {
       <header className="bg-white/80 backdrop-blur-sm shadow-soft border-b border-sky-tint">
         <div className="container mx-auto px-4 py-4 flex justify-between items-center">
           <Logo size="small" />
-          <Button variant="ghost" size="sm" onClick={handleLogout} className="hover:bg-sky-tint/50 transition-colors">
-            <LogOut className="w-4 h-4 mr-2" />
-            Logout
-          </Button>
+          <div className="flex items-center gap-4">
+            <CompactLanguageSelector />
+            <Button variant="ghost" size="sm" onClick={handleLogout} className="hover:bg-sky-tint/50 transition-colors">
+              <LogOut className="w-4 h-4 mr-2" />
+              {t('nav.logout')}
+            </Button>
+          </div>
         </div>
       </header>
 
@@ -137,24 +145,36 @@ const Dashboard = () => {
             <CardContent className="pt-4">
               <div className="flex justify-between items-center">
                 <div>
-                  <p className="text-sm text-slate-gray">Current Balance</p>
-                  <p className="text-2xl font-bold text-deep-navy">€{balance.toFixed(2)}</p>
+                  <p className="text-sm text-slate-gray">{t('dashboard.balance')}</p>
+                  <p className="text-2xl font-bold text-deep-navy">€{balance.toFixed(2)} EUR</p>
+                  <p className="text-xs text-slate-gray mt-1">💳 Connect Stripe for seamless payments</p>
                 </div>
                 <Dialog>
                   <DialogTrigger asChild>
                     <Button>
                       <CreditCard className="w-4 h-4 mr-2" />
-                      Top Up
+                      {t('dashboard.topup')}
                     </Button>
                   </DialogTrigger>
                   <DialogContent className="max-w-md">
                     <DialogHeader>
-                      <DialogTitle>Manage Balance</DialogTitle>
+                      <DialogTitle>Manage Balance & Stripe Integration</DialogTitle>
                     </DialogHeader>
                     <div className="space-y-6">
-                      {/* Top Up Section */}
+                      {/* Stripe Integration Notice */}
+                      <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                        <h4 className="font-semibold text-blue-800 mb-2">🔄 Stripe Integration Required</h4>
+                        <p className="text-sm text-blue-700 mb-3">
+                          For real payments, connect your Stripe account to process secure transactions.
+                        </p>
+                        <Button variant="outline" size="sm" className="w-full">
+                          Connect Stripe Account
+                        </Button>
+                      </div>
+
+                      {/* Demo Top Up Section */}
                       <div>
-                        <h3 className="font-semibold mb-3">Top Up Balance</h3>
+                        <h3 className="font-semibold mb-3">Demo Top Up (EUR)</h3>
                         <div className="grid grid-cols-3 gap-2 mb-3">
                           {[5, 10, 25].map(amount => (
                             <Button
@@ -167,7 +187,7 @@ const Dashboard = () => {
                           ))}
                         </div>
                         <Button onClick={handleTopUp} className="w-full">
-                          Add €{topUpAmount}
+                          Add €{topUpAmount} EUR (Demo)
                         </Button>
                       </div>
 
@@ -215,13 +235,116 @@ const Dashboard = () => {
               </div>
             </CardContent>
           </Card>
+          {/* Mobile Mode Switcher */}
+          <div className="md:hidden mb-6">
+            <div className="flex bg-white/80 backdrop-blur-sm rounded-lg p-1 shadow-soft">
+              <Button
+                variant={mobileMode === 'record' ? 'default' : 'ghost'}
+                size="sm"
+                className="flex-1"
+                onClick={() => setMobileMode('record')}
+              >
+                <Mic className="w-4 h-4 mr-2" />
+                Record
+              </Button>
+              <Button
+                variant={mobileMode === 'upload' ? 'default' : 'ghost'}
+                size="sm"
+                className="flex-1"
+                onClick={() => setMobileMode('upload')}
+              >
+                <Upload className="w-4 h-4 mr-2" />
+                Upload
+              </Button>
+            </div>
+          </div>
+
           {/* Main Action Cards */}
-          <div className="grid md:grid-cols-2 gap-6 mb-8">
-            <Card className="hover:shadow-lg transition-all duration-300 hover:-translate-y-1 bg-white/80 backdrop-blur-sm">
+          <div className={`${mobileMode === 'record' ? 'md:grid-cols-2' : 'md:grid-cols-2'} grid gap-6 mb-8 ${mobileMode === 'record' ? 'md:grid' : 'md:grid'}`}>
+            {/* Record Card - Priority on Mobile */}
+            <Card className={`hover:shadow-lg transition-all duration-300 hover:-translate-y-1 bg-white/80 backdrop-blur-sm ${mobileMode === 'upload' ? 'hidden md:block' : ''} ${mobileMode === 'record' ? 'md:order-2' : ''}`}>
+              <CardHeader>
+                <CardTitle className="flex items-center">
+                  <Mic className="w-5 h-5 mr-2" />
+                  {t('dashboard.record')}
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="text-center">
+                  <div className="flex justify-center gap-2 mb-4">
+                    <Button
+                      size="lg"
+                      className={`w-24 h-24 rounded-full transition-all duration-300 ${
+                        isRecording 
+                          ? 'bg-red-500 hover:bg-red-600 animate-pulse' 
+                          : 'bg-gradient-primary hover:scale-110 shadow-button'
+                      }`}
+                      onClick={isRecording ? stopRecording : startRecording}
+                    >
+                      {isRecording ? (
+                        <Square className="w-8 h-8" />
+                      ) : (
+                        <Mic className="w-8 h-8" />
+                      )}
+                    </Button>
+                    {isRecording && (
+                      <Button
+                        size="lg"
+                        variant="outline"
+                        className="w-16 h-16 rounded-full"
+                        onClick={() => {
+                          setIsPaused(!isPaused);
+                          if (isPaused) {
+                            // Resume recording
+                            const timer = setInterval(() => {
+                              setRecordingTime(prev => {
+                                const newTime = prev + 1;
+                                if (newTime >= 14400) {
+                                  stopRecording();
+                                  return prev;
+                                }
+                                return newTime;
+                              });
+                            }, 1000);
+                            (window as any).recordingTimer = timer;
+                          } else {
+                            // Pause recording
+                            if ((window as any).recordingTimer) {
+                              clearInterval((window as any).recordingTimer);
+                            }
+                          }
+                        }}
+                      >
+                        {isPaused ? <Play className="w-6 h-6" /> : <Pause className="w-6 h-6" />}
+                      </Button>
+                    )}
+                  </div>
+                  <p className="text-lg font-semibold">
+                    {isRecording ? formatTime(recordingTime) : "00:00"}
+                  </p>
+                  <p className="text-sm text-slate-gray">
+                    {isRecording 
+                      ? isPaused 
+                        ? "Paused (Max 4 hours total)" 
+                        : t('dashboard.recording')
+                      : t('dashboard.clickstart')
+                    }
+                  </p>
+                  {recordingTime > 14400 && (
+                    <p className="text-xs text-red-600 mt-1">
+                      {t('dashboard.maxtime')}
+                    </p>
+                  )}
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Upload Card */}
+            <Card className={`hover:shadow-lg transition-all duration-300 hover:-translate-y-1 bg-white/80 backdrop-blur-sm ${mobileMode === 'record' ? 'hidden md:block' : ''} ${mobileMode === 'upload' ? 'md:order-1' : ''}`}>
               <CardHeader>
                 <CardTitle className="flex items-center">
                   <Upload className="w-5 h-5 mr-2" />
-                  Upload Audio
+                  {t('dashboard.upload')}
                 </CardTitle>
               </CardHeader>
               <CardContent>
@@ -274,63 +397,6 @@ const Dashboard = () => {
                     </div>
                   </div>
                 )}
-              </CardContent>
-            </Card>
-
-            <Card className="hover:shadow-lg transition-all duration-300 hover:-translate-y-1 bg-white/80 backdrop-blur-sm">
-              <CardHeader>
-                <CardTitle className="flex items-center">
-                  <Mic className="w-5 h-5 mr-2" />
-                  Record Audio
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="text-center">
-                  <div className="flex justify-center gap-2 mb-4">
-                    <Button
-                      size="lg"
-                      className={`w-24 h-24 rounded-full transition-all duration-300 ${
-                        isRecording 
-                          ? 'bg-red-500 hover:bg-red-600 animate-pulse' 
-                          : 'bg-gradient-primary hover:scale-110 shadow-button'
-                      }`}
-                      onClick={isRecording ? stopRecording : startRecording}
-                    >
-                      {isRecording ? (
-                        <Square className="w-8 h-8" />
-                      ) : (
-                        <Mic className="w-8 h-8" />
-                      )}
-                    </Button>
-                    {isRecording && (
-                      <Button
-                        size="lg"
-                        variant="outline"
-                        className="w-16 h-16 rounded-full"
-                        onClick={() => {
-                          // Pause functionality - toggle recording state
-                          setIsRecording(false);
-                          if ((window as any).recordingTimer) {
-                            clearInterval((window as any).recordingTimer);
-                          }
-                        }}
-                      >
-                        <Square className="w-6 h-6" />
-                      </Button>
-                    )}
-                  </div>
-                  <p className="text-lg font-semibold">
-                    {isRecording ? formatTime(recordingTime) : "00:00"}
-                  </p>
-                  <p className="text-sm text-slate-gray">
-                    {isRecording ? "Recording... (Max 4 hours)" : "Click to start"}
-                  </p>
-                  {recordingTime > 14400 && ( // 4 hours = 14400 seconds
-                    <p className="text-xs text-red-600 mt-1">
-                      Maximum recording time reached
-                    </p>
-                  )}
-                </div>
               </CardContent>
             </Card>
           </div>
