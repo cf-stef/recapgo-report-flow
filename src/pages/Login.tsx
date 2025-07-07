@@ -93,9 +93,16 @@ const Login = () => {
               <p className="text-sm text-slate-gray mb-3">
                 {t('login.terms')}
               </p>
-              <p className="text-sm text-primary font-medium">
+              <Button 
+                variant="ghost" 
+                className="text-sm text-primary font-medium hover:bg-primary/10 transition-colors p-2 h-auto"
+                onClick={() => {
+                  // For demo purposes, redirect to dashboard as if account was created
+                  navigate("/dashboard");
+                }}
+              >
                 {t('login.createaccount')}
-              </p>
+              </Button>
             </div>
 
             <div className="text-center mt-4">
