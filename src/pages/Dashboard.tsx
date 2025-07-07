@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import Logo from "@/components/Logo";
 import CompactLanguageSelector from "@/components/CompactLanguageSelector";
-import CompactCurrencySelector from "@/components/CompactCurrencySelector";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -155,10 +154,7 @@ const Dashboard = () => {
               <LogOut className="w-4 h-4 mr-2" />
               {t('nav.logout')}
             </Button>
-            <div className="flex flex-col gap-1">
-              <CompactLanguageSelector />
-              <CompactCurrencySelector />
-            </div>
+            <CompactLanguageSelector />
           </div>
         </div>
       </header>
