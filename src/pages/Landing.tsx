@@ -5,20 +5,31 @@ import { Link } from "react-router-dom";
 import { useLanguage } from "@/contexts/LanguageContext";
 import Logo from "@/components/Logo";
 import CompactLanguageSelector from "@/components/CompactLanguageSelector";
+import FloatingElements from "@/components/FloatingElements";
+import { useEffect, useState } from "react";
 
 const Landing = () => {
   const { t } = useLanguage();
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    setIsVisible(true);
+  }, []);
 
   return (
-    <div className="min-h-screen bg-gradient-hero overflow-hidden">
+    <div className="min-h-screen bg-gradient-hero overflow-hidden relative">
+      <FloatingElements />
+      
       {/* Navigation */}
-      <nav className="container mx-auto px-4 py-6">
+      <nav className="container mx-auto px-4 py-6 relative z-10">
         <div className="flex justify-between items-center">
-          <Logo />
-          <div className="flex items-center gap-4">
+          <div className={`transition-all duration-700 ${isVisible ? 'animate-bounce-in' : 'opacity-0'}`}>
+            <Logo />
+          </div>
+          <div className={`flex items-center gap-4 transition-all duration-700 delay-200 ${isVisible ? 'animate-slide-up-stagger' : 'opacity-0 translate-y-8'}`}>
             <Link to="/login">
-              <Button variant="outline" className="hover:scale-105 transition-all duration-300">
-                {t('nav.signin')}
+              <Button variant="outline" className="hover:scale-105 transition-all duration-300 hover:shadow-lg group">
+                <span className="group-hover:animate-pulse">{t('nav.signin')}</span>
               </Button>
             </Link>
             <CompactLanguageSelector />
@@ -27,77 +38,77 @@ const Landing = () => {
       </nav>
 
       {/* Hero Section */}
-      <div className="container mx-auto px-4 py-12 lg:py-20">
+      <div className="container mx-auto px-4 py-12 lg:py-20 relative z-10">
         <div className="text-center max-w-5xl mx-auto">
-          <div className="animate-fade-in">
-            <div className="inline-flex items-center gap-2 bg-white/80 backdrop-blur-sm rounded-full px-4 py-2 text-sm font-medium text-deep-navy mb-8 border border-electric-blue/20">
-              <Timer className="w-4 h-4 text-primary" />
+          <div className={`transition-all duration-1000 ${isVisible ? 'animate-fade-in' : 'opacity-0'}`}>
+            <div className={`inline-flex items-center gap-2 bg-white/80 backdrop-blur-sm rounded-full px-4 py-2 text-sm font-medium text-deep-navy mb-8 border border-electric-blue/20 hover:scale-105 transition-all duration-300 animate-pulse-glow delay-500 ${isVisible ? 'animate-bounce-in' : 'opacity-0'}`}>
+              <Timer className="w-4 h-4 text-primary animate-wiggle" />
               {t('landing.hero.badge')}
             </div>
             
-            <h1 className="text-4xl sm:text-5xl lg:text-7xl font-bold text-deep-navy mb-6 leading-tight">
+            <h1 className={`text-4xl sm:text-5xl lg:text-7xl font-bold text-deep-navy mb-6 leading-tight transition-all duration-1000 delay-300 ${isVisible ? 'animate-slide-up-stagger' : 'opacity-0 translate-y-12'}`}>
               {t('landing.hero.title')}
-              <span className="block text-transparent bg-clip-text bg-gradient-primary">
+              <span className="block text-transparent bg-clip-text bg-gradient-primary animate-gradient-shift bg-[length:200%_auto]">
                 {t('landing.hero.subtitle')}
               </span>
             </h1>
             
-            <p className="text-lg sm:text-xl lg:text-2xl text-slate-gray mb-12 max-w-3xl mx-auto leading-relaxed">
+            <p className={`text-lg sm:text-xl lg:text-2xl text-slate-gray mb-12 max-w-3xl mx-auto leading-relaxed transition-all duration-1000 delay-500 ${isVisible ? 'animate-slide-up-stagger' : 'opacity-0 translate-y-8'}`}>
               {t('landing.hero.description')}
             </p>
             
-            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-16">
+            <div className={`flex flex-col sm:flex-row gap-4 justify-center items-center mb-16 transition-all duration-1000 delay-700 ${isVisible ? 'animate-bounce-in' : 'opacity-0 scale-75'}`}>
               <Link to="/login">
                 <Button 
                   size="lg" 
-                  className="text-base sm:text-lg px-8 py-4 bg-gradient-primary hover:scale-105 transition-all duration-300 shadow-button group w-full sm:w-auto"
+                  className="text-base sm:text-lg px-8 py-4 bg-gradient-primary hover:scale-110 transition-all duration-500 shadow-button group w-full sm:w-auto animate-pulse-glow"
                 >
-                  {t('landing.hero.cta')}
-                  <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
+                  <span className="group-hover:animate-bounce">{t('landing.hero.cta')}</span>
+                  <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-2 transition-transform duration-300" />
                 </Button>
               </Link>
-              <p className="text-sm text-slate-gray">{t('landing.hero.nocardreq')}</p>
+              <p className="text-sm text-slate-gray animate-float-slow">{t('landing.hero.nocardreq')}</p>
             </div>
           </div>
           
           {/* Hero Visual Flow - Mobile Optimized */}
-          <div className="animate-fade-in bg-white/80 backdrop-blur-sm rounded-3xl shadow-soft p-6 sm:p-8 max-w-4xl mx-auto border border-electric-blue/10">
+          <div className={`bg-white/80 backdrop-blur-sm rounded-3xl shadow-soft p-6 sm:p-8 max-w-4xl mx-auto border border-electric-blue/10 hover:shadow-xl transition-all duration-500 group ${isVisible ? 'animate-bounce-in delay-1000' : 'opacity-0 scale-90'}`}>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-6 sm:gap-8">
-              <div className="text-center group">
-                <div className="w-16 h-16 sm:w-20 sm:h-20 bg-gradient-primary rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-all duration-300 shadow-button">
-                  <Mic className="w-8 h-8 sm:w-10 sm:h-10 text-white" />
+              <div className="text-center group/item">
+                <div className="w-16 h-16 sm:w-20 sm:h-20 bg-gradient-primary rounded-2xl flex items-center justify-center mb-4 group-hover/item:scale-125 group-hover/item:rotate-6 transition-all duration-500 shadow-button animate-float">
+                  <Mic className="w-8 h-8 sm:w-10 sm:h-10 text-white group-hover/item:animate-pulse" />
                 </div>
-                <p className="text-sm sm:text-base font-medium text-deep-navy">Record or Upload</p>
+                <p className="text-sm sm:text-base font-medium text-deep-navy group-hover/item:text-primary transition-colors">Record or Upload</p>
                 <p className="text-xs text-slate-gray">Any audio format</p>
               </div>
               
               <div className="hidden sm:block">
-                <ArrowRight className="w-6 h-6 text-primary animate-pulse" />
+                <ArrowRight className="w-6 h-6 text-primary animate-pulse group-hover:animate-bounce" />
               </div>
               <div className="sm:hidden">
                 <div className="w-1 h-8 bg-gradient-primary rounded-full animate-pulse"></div>
               </div>
               
-              <div className="text-center group">
-                <div className="w-16 h-16 sm:w-20 sm:h-20 bg-gradient-primary rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-all duration-300 shadow-button">
-                  <Zap className="w-8 h-8 sm:w-10 sm:h-10 text-white" />
+              <div className="text-center group/item">
+                <div className="w-16 h-16 sm:w-20 sm:h-20 bg-gradient-primary rounded-2xl flex items-center justify-center mb-4 group-hover/item:scale-125 group-hover/item:-rotate-6 transition-all duration-500 shadow-button animate-float-slow">
+                  <Zap className="w-8 h-8 sm:w-10 sm:h-10 text-white group-hover/item:animate-wiggle" />
                 </div>
-                <p className="text-sm sm:text-base font-medium text-deep-navy">AI Processing</p>
+                <p className="text-sm sm:text-base font-medium text-deep-navy group-hover/item:text-primary transition-colors">AI Processing</p>
                 <p className="text-xs text-slate-gray">Under 60 seconds</p>
               </div>
               
               <div className="hidden sm:block">
-                <ArrowRight className="w-6 h-6 text-primary animate-pulse" />
+                <ArrowRight className="w-6 h-6 text-primary animate-pulse group-hover:animate-bounce" />
               </div>
               <div className="sm:hidden">
                 <div className="w-1 h-8 bg-gradient-primary rounded-full animate-pulse"></div>
               </div>
               
-              <div className="text-center group">
-                <div className="w-16 h-16 sm:w-20 sm:h-20 bg-gradient-primary rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-all duration-300 shadow-button">
-                  <Mail className="w-8 h-8 sm:w-10 sm:h-10 text-white" />
+              <div className="text-center group/item">
+                <div className="w-16 h-16 sm:w-20 sm:h-20 bg-gradient-primary rounded-2xl flex items-center justify-center mb-4 group-hover/item:scale-125 group-hover/item:rotate-12 transition-all duration-500 shadow-button animate-float">
+                  <Mail className="w-8 h-8 sm:w-10 sm:h-10 text-white group-hover/item:animate-bounce" />
                 </div>
-                <p className="text-sm sm:text-base font-medium text-deep-navy">Professional Report</p>
+                <p className="text-sm sm:text-base font-medium text-deep-navy group-hover/item:text-primary transition-colors">Professional Report</p>
                 <p className="text-xs text-slate-gray">Delivered to email</p>
               </div>
             </div>
@@ -118,60 +129,63 @@ const Landing = () => {
         
         <div className="max-w-5xl mx-auto">
           <div className="grid lg:grid-cols-3 gap-8">
-            <Card className="group hover:scale-105 transition-all duration-300 hover:shadow-lg bg-white/80 backdrop-blur-sm border-0 shadow-soft">
-              <CardContent className="p-8 text-center relative">
-                <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
-                  <div className="w-8 h-8 bg-gradient-primary rounded-full flex items-center justify-center text-white font-bold text-sm">
+            <Card className={`group hover:scale-105 transition-all duration-500 hover:shadow-xl bg-white/80 backdrop-blur-sm border-0 shadow-soft hover:-translate-y-2 ${isVisible ? 'animate-bounce-in' : 'opacity-0'}`} style={{animationDelay: '1200ms'}}>
+              <CardContent className="p-8 text-center relative overflow-hidden">
+                <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 z-10">
+                  <div className="w-8 h-8 bg-gradient-primary rounded-full flex items-center justify-center text-white font-bold text-sm animate-pulse-glow">
                     1
                   </div>
                 </div>
-                <div className="w-20 h-20 bg-gradient-primary rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-all duration-300 shadow-button">
-                  <Mic className="w-10 h-10 text-white" />
+                <div className="w-20 h-20 bg-gradient-primary rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-125 group-hover:rotate-12 transition-all duration-500 shadow-button animate-float relative">
+                  <Mic className="w-10 h-10 text-white group-hover:animate-wiggle" />
+                  <div className="absolute inset-0 bg-gradient-primary rounded-2xl opacity-0 group-hover:opacity-20 animate-pulse"></div>
                 </div>
-                <h3 className="text-xl font-bold text-deep-navy mb-4">
+                <h3 className="text-xl font-bold text-deep-navy mb-4 group-hover:text-primary transition-colors">
                   Record or Upload
                 </h3>
-                <p className="text-slate-gray leading-relaxed">
+                <p className="text-slate-gray leading-relaxed group-hover:text-deep-navy transition-colors">
                   Start recording with one click, or upload any audio file. Works with phone calls, 
                   Zoom recordings, or voice memos.
                 </p>
               </CardContent>
             </Card>
             
-            <Card className="group hover:scale-105 transition-all duration-300 hover:shadow-lg bg-white/80 backdrop-blur-sm border-0 shadow-soft">
-              <CardContent className="p-8 text-center relative">
-                <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
-                  <div className="w-8 h-8 bg-gradient-primary rounded-full flex items-center justify-center text-white font-bold text-sm">
+            <Card className={`group hover:scale-105 transition-all duration-500 hover:shadow-xl bg-white/80 backdrop-blur-sm border-0 shadow-soft hover:-translate-y-2 ${isVisible ? 'animate-bounce-in' : 'opacity-0'}`} style={{animationDelay: '1400ms'}}>
+              <CardContent className="p-8 text-center relative overflow-hidden">
+                <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 z-10">
+                  <div className="w-8 h-8 bg-gradient-primary rounded-full flex items-center justify-center text-white font-bold text-sm animate-pulse-glow">
                     2
                   </div>
                 </div>
-                <div className="w-20 h-20 bg-gradient-primary rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-all duration-300 shadow-button">
-                  <Zap className="w-10 h-10 text-white" />
+                <div className="w-20 h-20 bg-gradient-primary rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-125 group-hover:-rotate-12 transition-all duration-500 shadow-button animate-float-slow relative">
+                  <Zap className="w-10 h-10 text-white group-hover:animate-bounce" />
+                  <div className="absolute inset-0 bg-gradient-primary rounded-2xl opacity-0 group-hover:opacity-20 animate-pulse"></div>
                 </div>
-                <h3 className="text-xl font-bold text-deep-navy mb-4">
+                <h3 className="text-xl font-bold text-deep-navy mb-4 group-hover:text-primary transition-colors">
                   AI Magic Happens
                 </h3>
-                <p className="text-slate-gray leading-relaxed">
+                <p className="text-slate-gray leading-relaxed group-hover:text-deep-navy transition-colors">
                   Our AI extracts key points, action items, and decisions. 
                   Creates a structured, professional business report in seconds.
                 </p>
               </CardContent>
             </Card>
             
-            <Card className="group hover:scale-105 transition-all duration-300 hover:shadow-lg bg-white/80 backdrop-blur-sm border-0 shadow-soft">
-              <CardContent className="p-8 text-center relative">
-                <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
-                  <div className="w-8 h-8 bg-gradient-primary rounded-full flex items-center justify-center text-white font-bold text-sm">
+            <Card className={`group hover:scale-105 transition-all duration-500 hover:shadow-xl bg-white/80 backdrop-blur-sm border-0 shadow-soft hover:-translate-y-2 ${isVisible ? 'animate-bounce-in' : 'opacity-0'}`} style={{animationDelay: '1600ms'}}>
+              <CardContent className="p-8 text-center relative overflow-hidden">
+                <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 z-10">
+                  <div className="w-8 h-8 bg-gradient-primary rounded-full flex items-center justify-center text-white font-bold text-sm animate-pulse-glow">
                     3
                   </div>
                 </div>
-                <div className="w-20 h-20 bg-gradient-primary rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-all duration-300 shadow-button">
-                  <Mail className="w-10 h-10 text-white" />
+                <div className="w-20 h-20 bg-gradient-primary rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-125 group-hover:rotate-6 transition-all duration-500 shadow-button animate-float relative">
+                  <Mail className="w-10 h-10 text-white group-hover:animate-pulse" />
+                  <div className="absolute inset-0 bg-gradient-primary rounded-2xl opacity-0 group-hover:opacity-20 animate-pulse"></div>
                 </div>
-                <h3 className="text-xl font-bold text-deep-navy mb-4">
+                <h3 className="text-xl font-bold text-deep-navy mb-4 group-hover:text-primary transition-colors">
                   Perfect Report Delivered
                 </h3>
-                <p className="text-slate-gray leading-relaxed">
+                <p className="text-slate-gray leading-relaxed group-hover:text-deep-navy transition-colors">
                   Get a professionally formatted .docx report sent to your email. 
                   Ready to share with clients or team members.
                 </p>
