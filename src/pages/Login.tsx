@@ -1,16 +1,22 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Login = () => {
+  const navigate = useNavigate();
+  
   const handleGoogleLogin = () => {
-    // TODO: Implement Google OAuth
-    console.log("Google login clicked");
+    // For demo purposes, redirect to dashboard
+    navigate("/dashboard");
   };
 
   const handleMicrosoftLogin = () => {
-    // TODO: Implement Microsoft OAuth
-    console.log("Microsoft login clicked");
+    // For demo purposes, redirect to dashboard
+    navigate("/dashboard");
+  };
+
+  const handleDemoMode = () => {
+    navigate("/dashboard");
   };
 
   return (
@@ -56,6 +62,22 @@ const Login = () => {
                 <path fill="#ffb900" d="M13 13h10v10H13z"/>
               </svg>
               Continue with Microsoft
+            </Button>
+
+            <div className="relative">
+              <div className="absolute inset-0 flex items-center">
+                <span className="w-full border-t" />
+              </div>
+              <div className="relative flex justify-center text-xs uppercase">
+                <span className="bg-background px-2 text-muted-foreground">Or</span>
+              </div>
+            </div>
+
+            <Button 
+              className="w-full h-12 text-base"
+              onClick={handleDemoMode}
+            >
+              Try Demo Mode
             </Button>
 
             <div className="text-center mt-6">
