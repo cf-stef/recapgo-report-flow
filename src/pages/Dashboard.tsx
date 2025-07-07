@@ -295,24 +295,24 @@ const Dashboard = () => {
               </CardHeader>
               <CardContent>
                 <div className="text-center">
-                  <div className="flex justify-center gap-2 mb-4">
-                    <Button
-                      size="lg"
-                      className={`w-24 h-24 rounded-full transition-all duration-300 ${
-                        isRecording 
-                          ? 'bg-red-500 hover:bg-red-600' 
-                          : 'bg-gradient-primary hover:scale-110 shadow-button'
-                      }`}
-                      onClick={isRecording ? stopRecording : startRecording}
-                    >
-                      {isRecording ? (
-                        <Square className="w-8 h-8" />
-                      ) : (
-                        <Mic className="w-8 h-8" />
-                      )}
-                    </Button>
-                    {isRecording && (
-                      <>
+                  <div className="relative">
+                    <div className="flex justify-center gap-2 mb-4">
+                      <Button
+                        size="lg"
+                        className={`w-24 h-24 rounded-full transition-all duration-300 ${
+                          isRecording 
+                            ? 'bg-red-500 hover:bg-red-600' 
+                            : 'bg-gradient-primary hover:scale-110 shadow-button'
+                        }`}
+                        onClick={isRecording ? stopRecording : startRecording}
+                      >
+                        {isRecording ? (
+                          <Square className="w-8 h-8" />
+                        ) : (
+                          <Mic className="w-8 h-8" />
+                        )}
+                      </Button>
+                      {isRecording && (
                         <Button
                           size="lg"
                           variant="outline"
@@ -342,15 +342,17 @@ const Dashboard = () => {
                         >
                           {isPaused ? <Play className="w-6 h-6" /> : <Pause className="w-6 h-6" />}
                         </Button>
-                        <Button
-                          size="lg"
-                          variant="destructive"
-                          className="w-16 h-16 rounded-full"
-                          onClick={cancelRecording}
-                        >
-                          ✕
-                        </Button>
-                      </>
+                      )}
+                    </div>
+                    {isRecording && (
+                      <Button
+                        size="sm"
+                        variant="ghost"
+                        className="absolute top-0 right-0 w-8 h-8 rounded-full text-slate-400 hover:text-red-500 hover:bg-red-50 transition-colors"
+                        onClick={cancelRecording}
+                      >
+                        ✕
+                      </Button>
                     )}
                   </div>
                   <p className="text-lg font-semibold">
