@@ -230,13 +230,27 @@ const translations = {
 
 export const LanguageProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [language, setLanguage] = useState<Language>(() => {
-    const saved = localStorage.getItem('language');
-    return (saved as Language) || 'en';
+    try {
+      const saved = localStorage.getItem('language');
+      console.log('LanguageProvider initializing, saved value:', saved);
+      const defaultLang = (saved as Language) || 'nl'; // Default to Dutch
+      console.log('LanguageProvider using language:', defaultLang);
+      return defaultLang;
+    } catch (error) {
+      console.log('LanguageProvider localStorage error:', error);
+      return 'nl'; // Fallback to Dutch if localStorage fails
+    }
   });
 
   const handleSetLanguage = (lang: Language) => {
+    console.log('Setting language to:', lang);
     setLanguage(lang);
-    localStorage.setItem('language', lang);
+    try {
+      localStorage.setItem('language', lang);
+      console.log('Language saved to localStorage:', lang);
+    } catch (error) {
+      console.error('Failed to save language to localStorage:', error);
+    }
   };
 
   const t = (key: string): string => {

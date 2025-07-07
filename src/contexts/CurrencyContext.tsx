@@ -17,13 +17,27 @@ const EUR_TO_USD_RATE = 1.1;
 
 export const CurrencyProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [currency, setCurrency] = useState<Currency>(() => {
-    const saved = localStorage.getItem('currency');
-    return (saved as Currency) || 'EUR';
+    try {
+      const saved = localStorage.getItem('currency');
+      console.log('CurrencyProvider initializing, saved value:', saved);
+      const defaultCurrency = (saved as Currency) || 'EUR'; // Default to EUR
+      console.log('CurrencyProvider using currency:', defaultCurrency);
+      return defaultCurrency;
+    } catch (error) {
+      console.log('CurrencyProvider localStorage error:', error);
+      return 'EUR'; // Fallback to EUR if localStorage fails
+    }
   });
 
   const handleSetCurrency = (curr: Currency) => {
+    console.log('Setting currency to:', curr);
     setCurrency(curr);
-    localStorage.setItem('currency', curr);
+    try {
+      localStorage.setItem('currency', curr);
+      console.log('Currency saved to localStorage:', curr);
+    } catch (error) {
+      console.error('Failed to save currency to localStorage:', error);
+    }
   };
 
   const formatCurrency = (amount: number): string => {
