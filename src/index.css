@@ -8,51 +8,50 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* RecapGo Brand Colors */
+    --background: 0 0% 100%; /* White */
+    --foreground: 227 65% 15%; /* Deep Navy */
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card: 0 0% 100%; /* White */
+    --card-foreground: 227 65% 15%; /* Deep Navy */
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover: 0 0% 100%; /* White */
+    --popover-foreground: 227 65% 15%; /* Deep Navy */
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    --primary: 215 83% 53%; /* Electric Blue */
+    --primary-foreground: 0 0% 100%; /* White */
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 203 100% 92%; /* Sky Tint */
+    --secondary-foreground: 227 65% 15%; /* Deep Navy */
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: 203 100% 92%; /* Sky Tint */
+    --muted-foreground: 0 0% 48%; /* Slate Gray */
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --accent: 203 100% 92%; /* Sky Tint */
+    --accent-foreground: 227 65% 15%; /* Deep Navy */
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --border: 203 100% 92%; /* Sky Tint */
+    --input: 203 100% 92%; /* Sky Tint */
+    --ring: 215 83% 53%; /* Electric Blue */
 
-    --radius: 0.5rem;
+    --radius: 0.75rem;
 
-    --sidebar-background: 0 0% 98%;
-
-    --sidebar-foreground: 240 5.3% 26.1%;
-
-    --sidebar-primary: 240 5.9% 10%;
-
-    --sidebar-primary-foreground: 0 0% 98%;
-
-    --sidebar-accent: 240 4.8% 95.9%;
-
-    --sidebar-accent-foreground: 240 5.9% 10%;
-
-    --sidebar-border: 220 13% 91%;
-
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    /* Custom brand tokens */
+    --electric-blue: 215 83% 53%;
+    --deep-navy: 227 65% 15%;
+    --sky-tint: 203 100% 92%;
+    --slate-gray: 0 0% 48%;
+    
+    /* Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(var(--electric-blue)), hsl(var(--primary)));
+    --gradient-hero: linear-gradient(135deg, hsl(var(--sky-tint)), hsl(var(--background)));
+    
+    /* Shadows */
+    --shadow-soft: 0 4px 20px -2px hsl(var(--electric-blue) / 0.1);
+    --shadow-button: 0 2px 10px -2px hsl(var(--electric-blue) / 0.2);
   }
 
   .dark {

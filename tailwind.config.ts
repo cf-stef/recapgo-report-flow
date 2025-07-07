@@ -52,16 +52,23 @@ export default {
 					DEFAULT: 'hsl(var(--card))',
 					foreground: 'hsl(var(--card-foreground))'
 				},
-				sidebar: {
-					DEFAULT: 'hsl(var(--sidebar-background))',
-					foreground: 'hsl(var(--sidebar-foreground))',
-					primary: 'hsl(var(--sidebar-primary))',
-					'primary-foreground': 'hsl(var(--sidebar-primary-foreground))',
-					accent: 'hsl(var(--sidebar-accent))',
-					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
-					border: 'hsl(var(--sidebar-border))',
-					ring: 'hsl(var(--sidebar-ring))'
-				}
+				// RecapGo brand colors
+				'electric-blue': 'hsl(var(--electric-blue))',
+				'deep-navy': 'hsl(var(--deep-navy))',
+				'sky-tint': 'hsl(var(--sky-tint))',
+				'slate-gray': 'hsl(var(--slate-gray))'
+			},
+			fontFamily: {
+				sans: ['Inter', 'system-ui', 'sans-serif'],
+				inter: ['Inter', 'system-ui', 'sans-serif']
+			},
+			backgroundImage: {
+				'gradient-primary': 'var(--gradient-primary)',
+				'gradient-hero': 'var(--gradient-hero)'
+			},
+			boxShadow: {
+				'soft': 'var(--shadow-soft)',
+				'button': 'var(--shadow-button)'
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
