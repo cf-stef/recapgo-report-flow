@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Voice Recording Report</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f8fafc;
+        }
+        .container {
+            background: white;
+            border-radius: 12px;
+            padding: 32px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 32px;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 24px;
+        }
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #1e40af;
+            margin-bottom: 8px;
+        }
+        .subtitle {
+            color: #64748b;
+            font-size: 16px;
+        }
+        .report-summary {
+            background: #f1f5f9;
+            border-left: 4px solid #3b82f6;
+            padding: 20px;
+            margin: 24px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            padding: 8px 0;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        .summary-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+        }
+        .summary-label {
+            font-weight: 600;
+            color: #475569;
+        }
+        .summary-value {
+            color: #1e293b;
+            font-weight: 500;
+        }
+        .content-section {
+            margin: 32px 0;
+        }
+        .section-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 16px;
+            border-bottom: 1px solid #e2e8f0;
+            padding-bottom: 8px;
+        }
+        .transcription {
+            background: #fefefe;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 20px;
+            font-size: 14px;
+            line-height: 1.7;
+            white-space: pre-wrap;
+        }
+        .cost-breakdown {
+            background: #fef3c7;
+            border: 1px solid #f59e0b;
+            border-radius: 8px;
+            padding: 16px;
+            margin: 20px 0;
+        }
+        .cost-title {
+            font-weight: 600;
+            color: #92400e;
+            margin-bottom: 8px;
+        }
+        .cost-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 4px;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 24px;
+            border-top: 1px solid #e2e8f0;
+            color: #64748b;
+            font-size: 14px;
+        }
+        .button {
+            display: inline-block;
+            background: #3b82f6;
+            color: white;
+            padding: 12px 24px;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            margin: 16px 0;
+        }
+        .alert {
+            background: #fee2e2;
+            border: 1px solid #fca5a5;
+            color: #991b1b;
+            padding: 12px;
+            border-radius: 6px;
+            margin: 16px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">Voice Recorder Pro</div>
+            <div class="subtitle">Your Recording Report is Ready</div>
+        </div>
+
+        <p>Hello {{ user_name or 'there' }},</p>
+        
+        <p>Your voice recording has been processed successfully. Here's your detailed report:</p>
+
+        <div class="report-summary">
+            <div class="summary-item">
+                <span class="summary-label">Recording Date:</span>
+                <span class="summary-value">{{ recording_date }}</span>
+            </div>
+            <div class="summary-item">
+                <span class="summary-label">Duration:</span>
+                <span class="summary-value">{{ duration_formatted }}</span>
+            </div>
+            <div class="summary-item">
+                <span class="summary-label">Language:</span>
+                <span class="summary-value">{{ language }}</span>
+            </div>
+            <div class="summary-item">
+                <span class="summary-label">File Size:</span>
+                <span class="summary-value">{{ file_size }}</span>
+            </div>
+            {% if processing_time %}
+            <div class="summary-item">
+                <span class="summary-label">Processing Time:</span>
+                <span class="summary-value">{{ processing_time }}</span>
+            </div>
+            {% endif %}
+        </div>
+
+        {% if transcription %}
+        <div class="content-section">
+            <div class="section-title">📝 Transcription</div>
+            <div class="transcription">{{ transcription }}</div>
+        </div>
+        {% endif %}
+
+        {% if cost_details %}
+        <div class="cost-breakdown">
+            <div class="cost-title">💰 Cost Breakdown</div>
+            {% for item in cost_details %}
+            <div class="cost-item">
+                <span>{{ item.description }}</span>
+                <span>{{ item.amount }}</span>
+            </div>
+            {% endfor %}
+            <hr style="margin: 12px 0; border: none; border-top: 1px solid #f59e0b;">
+            <div class="cost-item" style="font-weight: 600;">
+                <span>Total Cost:</span>
+                <span>{{ total_cost }}</span>
+            </div>
+            {% if is_minimum_charge %}
+            <div class="alert">
+                ℹ️ A minimum charge of {{ minimum_amount }} applies to all recordings.
+            </div>
+            {% endif %}
+        </div>
+        {% endif %}
+
+        {% if download_links %}
+        <div class="content-section">
+            <div class="section-title">📥 Download Your Files</div>
+            {% for link in download_links %}
+            <a href="{{ link.url }}" class="button">Download {{ link.name }}</a><br>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        {% if analysis or summary %}
+        <div class="content-section">
+            <div class="section-title">📊 Analysis & Insights</div>
+            {% if summary %}
+            <h4>Summary:</h4>
+            <p>{{ summary }}</p>
+            {% endif %}
+            {% if analysis %}
+            <h4>Key Points:</h4>
+            <ul>
+            {% for point in analysis %}
+                <li>{{ point }}</li>
+            {% endfor %}
+            </ul>
+            {% endif %}
+        </div>
+        {% endif %}
+
+        {% if errors or warnings %}
+        <div class="alert">
+            <strong>⚠️ Important Notes:</strong>
+            <ul style="margin: 8px 0 0 0;">
+            {% for message in (errors + warnings) %}
+                <li>{{ message }}</li>
+            {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+
+        <div class="footer">
+            <p>Thank you for using Voice Recorder Pro!</p>
+            <p>If you have any questions, please don't hesitate to contact our support team.</p>
+            <p style="margin-top: 16px; font-size: 12px;">
+                This email was sent on {{ email_date }}<br>
+                Report ID: {{ report_id }}
+            </p>
+        </div>
+    </div>
+</body>
+</html>
