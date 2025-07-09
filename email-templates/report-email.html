@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your Voice Recording Report</title>
+    <title>{% if language == 'nl' %}Uw Spraakopname Rapport{% elif language == 'fr' %}Votre Rapport d'Enregistrement Vocal{% elif language == 'de' %}Ihr Sprachaufnahme-Bericht{% elif language == 'es' %}Su Informe de Grabación de Voz{% else %}Your Voice Recording Report{% endif %}</title>
     <style>
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
@@ -131,33 +131,89 @@
     <div class="container">
         <div class="header">
             <div class="logo">Voice Recorder Pro</div>
-            <div class="subtitle">Your Recording Report is Ready</div>
+            <div class="subtitle">
+                {% if language == 'nl' %}Uw Opname Rapport is Klaar
+                {% elif language == 'fr' %}Votre Rapport d'Enregistrement est Prêt
+                {% elif language == 'de' %}Ihr Aufnahme-Bericht ist Fertig
+                {% elif language == 'es' %}Su Informe de Grabación está Listo
+                {% else %}Your Recording Report is Ready
+                {% endif %}
+            </div>
         </div>
 
-        <p>Hello {{ user_name or 'there' }},</p>
+        <p>
+            {% if language == 'nl' %}Hallo {{ user_name or 'daar' }},
+            {% elif language == 'fr' %}Bonjour {{ user_name or 'vous' }},
+            {% elif language == 'de' %}Hallo {{ user_name or 'Sie' }},
+            {% elif language == 'es' %}Hola {{ user_name or 'usted' }},
+            {% else %}Hello {{ user_name or 'there' }},
+            {% endif %}
+        </p>
         
-        <p>Your voice recording has been processed successfully. Here's your detailed report:</p>
+        <p>
+            {% if language == 'nl' %}Uw spraakopname is succesvol verwerkt. Hier is uw gedetailleerde rapport:
+            {% elif language == 'fr' %}Votre enregistrement vocal a été traité avec succès. Voici votre rapport détaillé :
+            {% elif language == 'de' %}Ihre Sprachaufnahme wurde erfolgreich verarbeitet. Hier ist Ihr detaillierter Bericht:
+            {% elif language == 'es' %}Su grabación de voz ha sido procesada exitosamente. Aquí está su informe detallado:
+            {% else %}Your voice recording has been processed successfully. Here's your detailed report:
+            {% endif %}
+        </p>
 
         <div class="report-summary">
             <div class="summary-item">
-                <span class="summary-label">Recording Date:</span>
+                <span class="summary-label">
+                    {% if language == 'nl' %}Opnamedatum:
+                    {% elif language == 'fr' %}Date d'enregistrement :
+                    {% elif language == 'de' %}Aufnahmedatum:
+                    {% elif language == 'es' %}Fecha de grabación:
+                    {% else %}Recording Date:
+                    {% endif %}
+                </span>
                 <span class="summary-value">{{ recording_date }}</span>
             </div>
             <div class="summary-item">
-                <span class="summary-label">Duration:</span>
+                <span class="summary-label">
+                    {% if language == 'nl' %}Duur:
+                    {% elif language == 'fr' %}Durée :
+                    {% elif language == 'de' %}Dauer:
+                    {% elif language == 'es' %}Duración:
+                    {% else %}Duration:
+                    {% endif %}
+                </span>
                 <span class="summary-value">{{ duration_formatted }}</span>
             </div>
             <div class="summary-item">
-                <span class="summary-label">Language:</span>
+                <span class="summary-label">
+                    {% if language == 'nl' %}Taal:
+                    {% elif language == 'fr' %}Langue :
+                    {% elif language == 'de' %}Sprache:
+                    {% elif language == 'es' %}Idioma:
+                    {% else %}Language:
+                    {% endif %}
+                </span>
                 <span class="summary-value">{{ language }}</span>
             </div>
             <div class="summary-item">
-                <span class="summary-label">File Size:</span>
+                <span class="summary-label">
+                    {% if language == 'nl' %}Bestandsgrootte:
+                    {% elif language == 'fr' %}Taille du fichier :
+                    {% elif language == 'de' %}Dateigröße:
+                    {% elif language == 'es' %}Tamaño del archivo:
+                    {% else %}File Size:
+                    {% endif %}
+                </span>
                 <span class="summary-value">{{ file_size }}</span>
             </div>
             {% if processing_time %}
             <div class="summary-item">
-                <span class="summary-label">Processing Time:</span>
+                <span class="summary-label">
+                    {% if language == 'nl' %}Verwerkingstijd:
+                    {% elif language == 'fr' %}Temps de traitement :
+                    {% elif language == 'de' %}Verarbeitungszeit:
+                    {% elif language == 'es' %}Tiempo de procesamiento:
+                    {% else %}Processing Time:
+                    {% endif %}
+                </span>
                 <span class="summary-value">{{ processing_time }}</span>
             </div>
             {% endif %}
@@ -165,14 +221,28 @@
 
         {% if transcription %}
         <div class="content-section">
-            <div class="section-title">📝 Transcription</div>
+            <div class="section-title">
+                📝 {% if language == 'nl' %}Transcriptie
+                {% elif language == 'fr' %}Transcription
+                {% elif language == 'de' %}Transkription
+                {% elif language == 'es' %}Transcripción
+                {% else %}Transcription
+                {% endif %}
+            </div>
             <div class="transcription">{{ transcription }}</div>
         </div>
         {% endif %}
 
         {% if cost_details %}
         <div class="cost-breakdown">
-            <div class="cost-title">💰 Cost Breakdown</div>
+            <div class="cost-title">
+                💰 {% if language == 'nl' %}Kostenspecificatie
+                {% elif language == 'fr' %}Détail des Coûts
+                {% elif language == 'de' %}Kostenaufschlüsselung
+                {% elif language == 'es' %}Desglose de Costos
+                {% else %}Cost Breakdown
+                {% endif %}
+            </div>
             {% for item in cost_details %}
             <div class="cost-item">
                 <span>{{ item.description }}</span>
@@ -181,12 +251,24 @@
             {% endfor %}
             <hr style="margin: 12px 0; border: none; border-top: 1px solid #f59e0b;">
             <div class="cost-item" style="font-weight: 600;">
-                <span>Total Cost:</span>
+                <span>
+                    {% if language == 'nl' %}Totale Kosten:
+                    {% elif language == 'fr' %}Coût Total :
+                    {% elif language == 'de' %}Gesamtkosten:
+                    {% elif language == 'es' %}Costo Total:
+                    {% else %}Total Cost:
+                    {% endif %}
+                </span>
                 <span>{{ total_cost }}</span>
             </div>
             {% if is_minimum_charge %}
             <div class="alert">
-                ℹ️ A minimum charge of {{ minimum_amount }} applies to all recordings.
+                ℹ️ {% if language == 'nl' %}Er geldt een minimumtarief van {{ minimum_amount }} voor alle opnames.
+                {% elif language == 'fr' %}Un tarif minimum de {{ minimum_amount }} s'applique à tous les enregistrements.
+                {% elif language == 'de' %}Für alle Aufnahmen gilt eine Mindestgebühr von {{ minimum_amount }}.
+                {% elif language == 'es' %}Se aplica un cargo mínimo de {{ minimum_amount }} a todas las grabaciones.
+                {% else %}A minimum charge of {{ minimum_amount }} applies to all recordings.
+                {% endif %}
             </div>
             {% endif %}
         </div>
@@ -194,22 +276,57 @@
 
         {% if download_links %}
         <div class="content-section">
-            <div class="section-title">📥 Download Your Files</div>
+            <div class="section-title">
+                📥 {% if language == 'nl' %}Download Uw Bestanden
+                {% elif language == 'fr' %}Télécharger Vos Fichiers
+                {% elif language == 'de' %}Ihre Dateien Herunterladen
+                {% elif language == 'es' %}Descargar Sus Archivos
+                {% else %}Download Your Files
+                {% endif %}
+            </div>
             {% for link in download_links %}
-            <a href="{{ link.url }}" class="button">Download {{ link.name }}</a><br>
+            <a href="{{ link.url }}" class="button">
+                {% if language == 'nl' %}Download
+                {% elif language == 'fr' %}Télécharger
+                {% elif language == 'de' %}Herunterladen
+                {% elif language == 'es' %}Descargar
+                {% else %}Download
+                {% endif %} {{ link.name }}
+            </a><br>
             {% endfor %}
         </div>
         {% endif %}
 
         {% if analysis or summary %}
         <div class="content-section">
-            <div class="section-title">📊 Analysis & Insights</div>
+            <div class="section-title">
+                📊 {% if language == 'nl' %}Analyse & Inzichten
+                {% elif language == 'fr' %}Analyse & Aperçus
+                {% elif language == 'de' %}Analyse & Einblicke
+                {% elif language == 'es' %}Análisis e Información
+                {% else %}Analysis & Insights
+                {% endif %}
+            </div>
             {% if summary %}
-            <h4>Summary:</h4>
+            <h4>
+                {% if language == 'nl' %}Samenvatting:
+                {% elif language == 'fr' %}Résumé :
+                {% elif language == 'de' %}Zusammenfassung:
+                {% elif language == 'es' %}Resumen:
+                {% else %}Summary:
+                {% endif %}
+            </h4>
             <p>{{ summary }}</p>
             {% endif %}
             {% if analysis %}
-            <h4>Key Points:</h4>
+            <h4>
+                {% if language == 'nl' %}Hoofdpunten:
+                {% elif language == 'fr' %}Points Clés :
+                {% elif language == 'de' %}Wichtige Punkte:
+                {% elif language == 'es' %}Puntos Clave:
+                {% else %}Key Points:
+                {% endif %}
+            </h4>
             <ul>
             {% for point in analysis %}
                 <li>{{ point }}</li>
@@ -221,7 +338,13 @@
 
         {% if errors or warnings %}
         <div class="alert">
-            <strong>⚠️ Important Notes:</strong>
+            <strong>⚠️ {% if language == 'nl' %}Belangrijke Opmerkingen:
+                {% elif language == 'fr' %}Notes Importantes :
+                {% elif language == 'de' %}Wichtige Hinweise:
+                {% elif language == 'es' %}Notas Importantes:
+                {% else %}Important Notes:
+                {% endif %}
+            </strong>
             <ul style="margin: 8px 0 0 0;">
             {% for message in (errors + warnings) %}
                 <li>{{ message }}</li>
@@ -231,11 +354,34 @@
         {% endif %}
 
         <div class="footer">
-            <p>Thank you for using Voice Recorder Pro!</p>
-            <p>If you have any questions, please don't hesitate to contact our support team.</p>
+            <p>
+                {% if language == 'nl' %}Bedankt voor het gebruik van Voice Recorder Pro!
+                {% elif language == 'fr' %}Merci d'utiliser Voice Recorder Pro !
+                {% elif language == 'de' %}Vielen Dank für die Nutzung von Voice Recorder Pro!
+                {% elif language == 'es' %}¡Gracias por usar Voice Recorder Pro!
+                {% else %}Thank you for using Voice Recorder Pro!
+                {% endif %}
+            </p>
+            <p>
+                {% if language == 'nl' %}Als u vragen heeft, aarzel dan niet om contact op te nemen met ons ondersteuningsteam.
+                {% elif language == 'fr' %}Si vous avez des questions, n'hésitez pas à contacter notre équipe de support.
+                {% elif language == 'de' %}Bei Fragen zögern Sie nicht, unser Support-Team zu kontaktieren.
+                {% elif language == 'es' %}Si tiene alguna pregunta, no dude en contactar a nuestro equipo de soporte.
+                {% else %}If you have any questions, please don't hesitate to contact our support team.
+                {% endif %}
+            </p>
             <p style="margin-top: 16px; font-size: 12px;">
-                This email was sent on {{ email_date }}<br>
+                {% if language == 'nl' %}Deze e-mail is verzonden op {{ email_date }}<br>
+                Rapport ID: {{ report_id }}
+                {% elif language == 'fr' %}Ce courriel a été envoyé le {{ email_date }}<br>
+                ID du rapport : {{ report_id }}
+                {% elif language == 'de' %}Diese E-Mail wurde am {{ email_date }} gesendet<br>
+                Bericht-ID: {{ report_id }}
+                {% elif language == 'es' %}Este correo fue enviado el {{ email_date }}<br>
+                ID del informe: {{ report_id }}
+                {% else %}This email was sent on {{ email_date }}<br>
                 Report ID: {{ report_id }}
+                {% endif %}
             </p>
         </div>
     </div>
