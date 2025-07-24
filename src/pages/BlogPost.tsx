@@ -527,20 +527,22 @@ export default function BlogPost() {
               <div className="bg-card rounded-lg p-8 shadow-sm border">
                 <div 
                   className="prose prose-lg max-w-none
-                    prose-headings:text-foreground prose-headings:font-bold
-                    prose-h1:text-3xl prose-h1:mb-6 prose-h1:mt-8
-                    prose-h2:text-2xl prose-h2:mb-4 prose-h2:mt-8
-                    prose-h3:text-xl prose-h3:mb-3 prose-h3:mt-6
-                    prose-p:text-foreground prose-p:mb-4 prose-p:leading-relaxed
-                    prose-strong:text-foreground prose-strong:font-semibold
-                    prose-li:text-foreground prose-li:mb-2
-                    prose-ul:mb-6 prose-ol:mb-6
-                    prose-blockquote:text-muted-foreground
+                    prose-headings:text-foreground prose-headings:font-bold prose-headings:tracking-tight
+                    prose-h1:text-4xl prose-h1:mb-8 prose-h1:mt-12 prose-h1:leading-tight prose-h1:border-b prose-h1:border-border prose-h1:pb-4
+                    prose-h2:text-3xl prose-h2:mb-6 prose-h2:mt-10 prose-h2:leading-tight prose-h2:text-primary
+                    prose-h3:text-2xl prose-h3:mb-4 prose-h3:mt-8 prose-h3:leading-tight prose-h3:text-foreground
+                    prose-p:text-foreground prose-p:mb-6 prose-p:leading-relaxed prose-p:text-base
+                    prose-strong:text-foreground prose-strong:font-semibold prose-strong:text-primary
+                    prose-li:text-foreground prose-li:mb-3 prose-li:leading-relaxed prose-li:pl-2
+                    prose-ul:mb-8 prose-ul:space-y-3 prose-ul:pl-6
+                    prose-ol:mb-8 prose-ol:space-y-3 prose-ol:pl-6
+                    prose-ul>li:marker:text-primary prose-ol>li:marker:text-primary prose-ol>li:marker:font-semibold
+                    prose-blockquote:text-muted-foreground prose-blockquote:not-italic
                     prose-blockquote:border-l-4 prose-blockquote:border-l-primary
-                    prose-blockquote:bg-sky-tint/20
-                    prose-blockquote:p-6 prose-blockquote:my-6
-                    prose-blockquote:rounded-r-lg prose-blockquote:italic
-                    prose-blockquote:text-lg"
+                    prose-blockquote:bg-gradient-to-r prose-blockquote:from-sky-tint/30 prose-blockquote:to-transparent
+                    prose-blockquote:p-8 prose-blockquote:my-8 prose-blockquote:rounded-r-lg 
+                    prose-blockquote:text-lg prose-blockquote:font-medium prose-blockquote:leading-relaxed
+                    prose-blockquote:shadow-sm"
                   dangerouslySetInnerHTML={{ __html: post.content }}
                 />
               </div>
