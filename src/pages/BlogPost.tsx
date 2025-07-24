@@ -473,52 +473,6 @@ export default function BlogPost() {
                   </div>
                 </div>
 
-                {/* Social Share Buttons */}
-                <div className="flex items-center gap-4 pt-6">
-                  <span className="text-sm text-muted-foreground">Share:</span>
-                  <div className="flex gap-2">
-                    <Button 
-                      variant="ghost" 
-                      size="sm" 
-                      onClick={() => shareOnSocial('twitter')}
-                      className="hover:bg-blue-500/10"
-                    >
-                      <Twitter className="w-4 h-4" />
-                    </Button>
-                    <Button 
-                      variant="ghost" 
-                      size="sm" 
-                      onClick={() => shareOnSocial('facebook')}
-                      className="hover:bg-blue-600/10"
-                    >
-                      <Facebook className="w-4 h-4" />
-                    </Button>
-                    <Button 
-                      variant="ghost" 
-                      size="sm" 
-                      onClick={() => shareOnSocial('linkedin')}
-                      className="hover:bg-blue-700/10"
-                    >
-                      <Linkedin className="w-4 h-4" />
-                    </Button>
-                    <Button 
-                      variant="ghost" 
-                      size="sm" 
-                      onClick={() => shareOnSocial('email')}
-                      className="hover:bg-gray-500/10"
-                    >
-                      <Mail className="w-4 h-4" />
-                    </Button>
-                    <Button 
-                      variant="ghost" 
-                      size="sm" 
-                      onClick={copyToClipboard}
-                      className="hover:bg-gray-500/10"
-                    >
-                      <Copy className="w-4 h-4" />
-                    </Button>
-                  </div>
-                </div>
               </header>
 
               {/* Key Takeaways - inspired by Fireflies */}
