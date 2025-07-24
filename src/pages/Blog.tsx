@@ -69,6 +69,84 @@ const blogPosts = [
     featured: false,
     image: "https://images.unsplash.com/photo-1556761175-b413da4baf72?w=800&h=400&fit=crop",
     readTime: "4 min read"
+  },
+  {
+    id: "5",
+    title: "The Future of Web Development: AI-Powered Coding",
+    description: "Explore how artificial intelligence is revolutionizing web development, from code generation to automated testing.",
+    content: "Full blog content here...",
+    category: "AI and ML",
+    author: "Alex Thompson",
+    authorImage: "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=100&h=100&fit=crop&crop=face",
+    date: "2024-12-20",
+    featured: false,
+    image: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=800&h=400&fit=crop",
+    readTime: "8 min read"
+  },
+  {
+    id: "6",
+    title: "Building Scalable APIs with Node.js and Express",
+    description: "Learn the best practices for creating robust and scalable APIs using Node.js and the Express framework.",
+    content: "Full blog content here...",
+    category: "Guides",
+    author: "Jennifer Wilson",
+    authorImage: "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=100&h=100&fit=crop&crop=face",
+    date: "2024-12-15",
+    featured: false,
+    image: "https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?w=800&h=400&fit=crop",
+    readTime: "12 min read"
+  },
+  {
+    id: "7",
+    title: "Frontend Performance Optimization Techniques",
+    description: "Discover essential techniques to boost your website's frontend performance including image optimization and code splitting.",
+    content: "Full blog content here...",
+    category: "Productivity",
+    author: "Robert Kumar",
+    authorImage: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=100&h=100&fit=crop&crop=face",
+    date: "2024-12-12",
+    featured: false,
+    image: "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?w=800&h=400&fit=crop",
+    readTime: "9 min read"
+  },
+  {
+    id: "8",
+    title: "The Rise of Serverless Computing",
+    description: "Understand the benefits and challenges of serverless architecture with AWS Lambda and Google Cloud Functions.",
+    content: "Full blog content here...",
+    category: "Guides",
+    author: "Lisa Chang",
+    authorImage: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&h=100&fit=crop&crop=face",
+    date: "2024-12-08",
+    featured: false,
+    image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=800&h=400&fit=crop",
+    readTime: "10 min read"
+  },
+  {
+    id: "9",
+    title: "UI/UX Design Principles for Engaging Interfaces",
+    description: "Learn the core principles of UI/UX design that lead to user-friendly and engaging digital products.",
+    content: "Full blog content here...",
+    category: "Productivity",
+    author: "Maria Garcia",
+    authorImage: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=100&h=100&fit=crop&crop=face",
+    date: "2024-12-03",
+    featured: false,
+    image: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=800&h=400&fit=crop",
+    readTime: "6 min read"
+  },
+  {
+    id: "10",
+    title: "Getting Started with TypeScript for JavaScript Developers",
+    description: "Transition smoothly from JavaScript to TypeScript with this comprehensive guide covering types and interfaces.",
+    content: "Full blog content here...",
+    category: "Guides",
+    author: "James Miller",
+    authorImage: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&h=100&fit=crop&crop=face",
+    date: "2024-11-28",
+    featured: false,
+    image: "https://images.unsplash.com/photo-1473091534298-04dcbce3278c?w=800&h=400&fit=crop",
+    readTime: "11 min read"
   }
 ];
 
