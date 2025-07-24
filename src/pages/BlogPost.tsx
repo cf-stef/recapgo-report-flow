@@ -500,19 +500,26 @@ export default function BlogPost() {
               </Card>
 
               {/* Article Body */}
-              <div 
-                className="prose prose-lg max-w-none animate-fade-in-1
-                  prose-headings:text-foreground 
-                  prose-p:text-foreground 
-                  prose-strong:text-foreground
-                  prose-li:text-foreground
-                  prose-blockquote:text-muted-foreground
-                  prose-blockquote:border-l-primary
-                  prose-blockquote:bg-sky-tint/20
-                  prose-blockquote:p-4
-                  prose-blockquote:rounded-r-lg"
-                dangerouslySetInnerHTML={{ __html: post.content }}
-              />
+              <div className="bg-card rounded-lg p-8 shadow-sm border">
+                <div 
+                  className="prose prose-lg max-w-none
+                    prose-headings:text-foreground prose-headings:font-bold
+                    prose-h1:text-3xl prose-h1:mb-6 prose-h1:mt-8
+                    prose-h2:text-2xl prose-h2:mb-4 prose-h2:mt-8
+                    prose-h3:text-xl prose-h3:mb-3 prose-h3:mt-6
+                    prose-p:text-foreground prose-p:mb-4 prose-p:leading-relaxed
+                    prose-strong:text-foreground prose-strong:font-semibold
+                    prose-li:text-foreground prose-li:mb-2
+                    prose-ul:mb-6 prose-ol:mb-6
+                    prose-blockquote:text-muted-foreground
+                    prose-blockquote:border-l-4 prose-blockquote:border-l-primary
+                    prose-blockquote:bg-sky-tint/20
+                    prose-blockquote:p-6 prose-blockquote:my-6
+                    prose-blockquote:rounded-r-lg prose-blockquote:italic
+                    prose-blockquote:text-lg"
+                  dangerouslySetInnerHTML={{ __html: post.content }}
+                />
+              </div>
 
               {/* Tags */}
               <div className="mt-12 pt-8 border-t">
