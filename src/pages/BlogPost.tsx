@@ -80,13 +80,15 @@ export default function BlogPost() {
       </div>
 
       {/* Hero Image */}
-      <div className="relative w-full h-64 md:h-80 lg:h-96 overflow-hidden bg-muted">
-        <img 
-          src={post.image} 
-          alt={post.title}
-          className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-background/20 to-transparent"></div>
+      <div className="container mx-auto px-4 py-8">
+        <div className="relative w-full max-w-4xl mx-auto aspect-[16/9] overflow-hidden rounded-2xl bg-muted shadow-soft">
+          <img 
+            src={post.image} 
+            alt={post.title}
+            className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-background/10 to-transparent rounded-2xl"></div>
+        </div>
       </div>
 
       {/* Article Content */}
