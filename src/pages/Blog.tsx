@@ -212,20 +212,22 @@ export default function Blog() {
           <div className="mb-16 animate-fade-in-2">
             <Card className="overflow-hidden bg-gradient-to-r from-card to-sky-tint/20 border-0 shadow-soft">
               <div className="grid md:grid-cols-2 gap-0">
-                <div className="aspect-video md:aspect-auto">
+                <Link to={`/blog/${featuredPost.id}`} className="aspect-video md:aspect-auto">
                   <img 
                     src={featuredPost.image} 
                     alt={featuredPost.title}
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-cover hover:scale-105 transition-transform duration-300 cursor-pointer"
                   />
-                </div>
+                </Link>
                 <CardContent className="p-8 flex flex-col justify-center">
                   <Badge variant="secondary" className="w-fit mb-4">
                     {featuredPost.category}
                   </Badge>
-                  <CardTitle className="text-3xl mb-4 text-foreground">
-                    {featuredPost.title}
-                  </CardTitle>
+                  <Link to={`/blog/${featuredPost.id}`}>
+                    <CardTitle className="text-3xl mb-4 text-foreground hover:text-primary transition-colors cursor-pointer">
+                      {featuredPost.title}
+                    </CardTitle>
+                  </Link>
                   <CardDescription className="text-lg mb-6">
                     {featuredPost.description}
                   </CardDescription>
@@ -260,21 +262,23 @@ export default function Blog() {
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 animate-fade-in-3">
           {currentPosts.map((post) => (
             <Card key={post.id} className="overflow-hidden hover:shadow-button transition-all duration-300 group">
-              <div className="aspect-video overflow-hidden">
+              <Link to={`/blog/${post.id}`} className="aspect-video overflow-hidden block">
                 <img 
                   src={post.image} 
                   alt={post.title}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300 cursor-pointer"
                 />
-              </div>
+              </Link>
               <CardHeader>
                 <div className="flex items-center justify-between mb-2">
                   <Badge variant="outline">{post.category}</Badge>
                   <span className="text-sm text-muted-foreground">{post.readTime}</span>
                 </div>
-                <CardTitle className="text-xl group-hover:text-primary transition-colors">
-                  {post.title}
-                </CardTitle>
+                <Link to={`/blog/${post.id}`}>
+                  <CardTitle className="text-xl group-hover:text-primary transition-colors cursor-pointer">
+                    {post.title}
+                  </CardTitle>
+                </Link>
                 <CardDescription className="line-clamp-3">
                   {post.description}
                 </CardDescription>
