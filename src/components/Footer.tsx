@@ -39,7 +39,7 @@ export default function Footer() {
               Get the latest insights on meeting productivity and AI collaboration.
             </p>
             <Link to="/blog">
-              <Button variant="outline" className="border-white/20 text-white hover:bg-white/10 w-full">
+              <Button variant="outline" className="border-white text-white hover:bg-white hover:text-deep-navy w-full">
                 <BookOpen className="w-4 h-4 mr-2" />
                 Read Our Blog
               </Button>
