@@ -530,7 +530,6 @@ export default function BlogPost() {
             {/* Sidebar */}
             <aside className="lg:col-span-1">
               <div className="sticky top-8 space-y-6">
-                {/* Share */}
                 <Card>
                   <CardContent className="p-6">
                     <h3 className="font-semibold mb-4 flex items-center gap-2">
@@ -561,6 +560,22 @@ export default function BlogPost() {
                       >
                         <Linkedin className="w-4 h-4 mr-2" />
                         LinkedIn
+                      </Button>
+                      <Button 
+                        variant="outline" 
+                        className="w-full justify-start" 
+                        onClick={() => shareOnSocial('facebook')}
+                      >
+                        <Facebook className="w-4 h-4 mr-2" />
+                        Facebook
+                      </Button>
+                      <Button 
+                        variant="outline" 
+                        className="w-full justify-start" 
+                        onClick={() => shareOnSocial('email')}
+                      >
+                        <Mail className="w-4 h-4 mr-2" />
+                        Email
                       </Button>
                     </div>
                   </CardContent>
