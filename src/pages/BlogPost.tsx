@@ -80,12 +80,13 @@ export default function BlogPost() {
       </div>
 
       {/* Hero Image */}
-      <div className="aspect-[21/9] max-h-96 overflow-hidden">
+      <div className="relative w-full h-64 md:h-80 lg:h-96 overflow-hidden bg-muted">
         <img 
           src={post.image} 
           alt={post.title}
-          className="w-full h-full object-cover"
+          className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
         />
+        <div className="absolute inset-0 bg-gradient-to-t from-background/20 to-transparent"></div>
       </div>
 
       {/* Article Content */}
