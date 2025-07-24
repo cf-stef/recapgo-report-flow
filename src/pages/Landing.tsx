@@ -451,11 +451,23 @@ const Landing = () => {
       {/* Footer */}
       <footer className="bg-deep-navy text-white py-12">
         <div className="container mx-auto px-4">
-          <div className="flex flex-col sm:flex-row justify-between items-center">
-            <div className="mb-4 sm:mb-0">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
+            <div>
               <Logo size="small" variant="light" />
             </div>
-            <div className="text-center sm:text-right">
+            
+            <div className="text-center">
+              <nav className="flex flex-wrap justify-center gap-6 text-sm">
+                <Link to="/blog" className="hover:text-primary transition-colors">
+                  Blog
+                </Link>
+                <Link to="/login" className="hover:text-primary transition-colors">
+                  Sign In
+                </Link>
+              </nav>
+            </div>
+            
+            <div className="text-center md:text-right">
               <p className="text-sm opacity-75">© 2024 RecapGo. All rights reserved.</p>
               <p className="text-xs opacity-60 mt-1">Transform meetings into magic</p>
             </div>
