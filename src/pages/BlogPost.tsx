@@ -5,7 +5,7 @@ import { Calendar, User, ArrowLeft, Share2, Clock, Twitter, Facebook, Linkedin, 
 import { Card, CardContent } from "@/components/ui/card";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { useToast } from "@/components/ui/use-toast";
+import { useToast } from "@/hooks/use-toast";
 
 // This would normally come from an API or CMS
 const getBlogPost = (id: string) => {
@@ -612,20 +612,6 @@ export default function BlogPost() {
                   </CardContent>
                 </Card>
 
-                {/* RecapGo Blog Promotion */}
-                <Card className="bg-gradient-to-br from-primary/10 to-sky-tint/20 border-primary/20">
-                  <CardContent className="p-6 text-center">
-                    <h3 className="font-semibold mb-2">RecapGo Blog</h3>
-                    <p className="text-sm text-muted-foreground mb-4">
-                      Check out the RecapGo blog to learn more about our product, customer stories, and our take on meetings, remote working, productivity, and more.
-                    </p>
-                    <Link to="/blog">
-                      <Button variant="default" size="sm" className="w-full">
-                        Visit RecapGo Blog
-                      </Button>
-                    </Link>
-                  </CardContent>
-                </Card>
               </div>
             </aside>
           </div>
