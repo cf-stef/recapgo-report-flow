@@ -4,6 +4,17 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Calendar, User, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
+import { 
+  Pagination,
+  PaginationContent,
+  PaginationEllipsis,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "@/components/ui/pagination";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 
 // Sample blog data - in a real app, this would come from an API or CMS
 const blogPosts = [
@@ -65,6 +76,8 @@ const categories = ["All", "Product", "Productivity", "AI and ML", "Customer Sto
 
 export default function Blog() {
   const [selectedCategory, setSelectedCategory] = useState("All");
+  const [currentPage, setCurrentPage] = useState(1);
+  const postsPerPage = 6;
   
   const filteredPosts = selectedCategory === "All" 
     ? blogPosts 
@@ -72,9 +85,21 @@ export default function Blog() {
     
   const featuredPost = blogPosts.find(post => post.featured);
   const regularPosts = filteredPosts.filter(post => !post.featured);
+  
+  // Pagination logic
+  const totalPages = Math.ceil(regularPosts.length / postsPerPage);
+  const startIndex = (currentPage - 1) * postsPerPage;
+  const endIndex = startIndex + postsPerPage;
+  const currentPosts = regularPosts.slice(startIndex, endIndex);
+  
+  const handleCategoryChange = (category: string) => {
+    setSelectedCategory(category);
+    setCurrentPage(1); // Reset to first page when category changes
+  };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-gradient-hero">
+      <Header />
       {/* Header */}
       <div className="bg-gradient-to-br from-sky-tint to-background border-b">
         <div className="container mx-auto px-4 py-16">
@@ -96,7 +121,7 @@ export default function Blog() {
             <Button
               key={category}
               variant={selectedCategory === category ? "default" : "outline"}
-              onClick={() => setSelectedCategory(category)}
+              onClick={() => handleCategoryChange(category)}
               className="rounded-full"
             >
               {category}
@@ -155,7 +180,7 @@ export default function Blog() {
 
         {/* Blog Grid */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 animate-fade-in-3">
-          {regularPosts.map((post) => (
+          {currentPosts.map((post) => (
             <Card key={post.id} className="overflow-hidden hover:shadow-button transition-all duration-300 group">
               <div className="aspect-video overflow-hidden">
                 <img 
@@ -202,15 +227,43 @@ export default function Blog() {
           ))}
         </div>
 
-        {/* Load More Button */}
-        {filteredPosts.length > 6 && (
-          <div className="text-center mt-12">
-            <Button variant="outline" size="lg">
-              Load More Posts
-            </Button>
+        {/* Pagination */}
+        {totalPages > 1 && (
+          <div className="mt-12 flex justify-center">
+            <Pagination>
+              <PaginationContent>
+                <PaginationItem>
+                  <PaginationPrevious 
+                    onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
+                    className={currentPage === 1 ? "pointer-events-none opacity-50" : "cursor-pointer"}
+                  />
+                </PaginationItem>
+                
+                {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+                  <PaginationItem key={page}>
+                    <PaginationLink
+                      onClick={() => setCurrentPage(page)}
+                      isActive={currentPage === page}
+                      className="cursor-pointer"
+                    >
+                      {page}
+                    </PaginationLink>
+                  </PaginationItem>
+                ))}
+                
+                <PaginationItem>
+                  <PaginationNext 
+                    onClick={() => setCurrentPage(Math.min(totalPages, currentPage + 1))}
+                    className={currentPage === totalPages ? "pointer-events-none opacity-50" : "cursor-pointer"}
+                  />
+                </PaginationItem>
+              </PaginationContent>
+            </Pagination>
           </div>
         )}
       </div>
+      
+      <Footer />
     </div>
   );
 }

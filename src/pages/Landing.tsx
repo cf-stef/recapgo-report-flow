@@ -4,8 +4,8 @@ import { Mic, FileText, Mail, Users, Clock, CheckCircle, Zap, Timer, ArrowRight 
 import { Link } from "react-router-dom";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useCurrency } from "@/contexts/CurrencyContext";
-import Logo from "@/components/Logo";
-import CompactLanguageSelector from "@/components/CompactLanguageSelector";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 
 const Landing = () => {
   const { t } = useLanguage();
@@ -13,20 +13,7 @@ const Landing = () => {
 
   return (
     <div className="min-h-screen bg-gradient-hero overflow-hidden">
-      {/* Navigation */}
-      <nav className="container mx-auto px-4 py-6">
-        <div className="flex justify-between items-center">
-          <Logo />
-          <div className="flex items-center gap-4">
-            <Link to="/login">
-              <Button variant="outline" className="hover:scale-105 transition-all duration-300">
-                {t('nav.signin')}
-              </Button>
-            </Link>
-            <CompactLanguageSelector />
-          </div>
-        </div>
-      </nav>
+      <Header />
 
       {/* Hero Section */}
       <div className="container mx-auto px-4 py-12 lg:py-20">
@@ -448,32 +435,7 @@ const Landing = () => {
         </div>
       </div>
 
-      {/* Footer */}
-      <footer className="bg-deep-navy text-white py-12">
-        <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
-            <div>
-              <Logo size="small" variant="light" />
-            </div>
-            
-            <div className="text-center">
-              <nav className="flex flex-wrap justify-center gap-6 text-sm">
-                <Link to="/blog" className="hover:text-primary transition-colors">
-                  Blog
-                </Link>
-                <Link to="/login" className="hover:text-primary transition-colors">
-                  Sign In
-                </Link>
-              </nav>
-            </div>
-            
-            <div className="text-center md:text-right">
-              <p className="text-sm opacity-75">© 2024 RecapGo. All rights reserved.</p>
-              <p className="text-xs opacity-60 mt-1">Transform meetings into magic</p>
-            </div>
-          </div>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 };
