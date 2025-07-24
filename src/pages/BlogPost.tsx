@@ -1,8 +1,11 @@
 import { useParams, Link } from "react-router-dom";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Calendar, User, ArrowLeft, Share2, Clock } from "lucide-react";
+import { Calendar, User, ArrowLeft, Share2, Clock, Twitter, Facebook, Linkedin, Mail, Copy } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+import { useToast } from "@/components/ui/use-toast";
 
 // This would normally come from an API or CMS
 const getBlogPost = (id: string) => {
@@ -350,25 +353,62 @@ const getBlogPost = (id: string) => {
 export default function BlogPost() {
   const { id } = useParams();
   const post = getBlogPost(id || "");
+  const { toast } = useToast();
+
+  const copyToClipboard = async () => {
+    try {
+      await navigator.clipboard.writeText(window.location.href);
+      toast({
+        title: "Link copied!",
+        description: "The link has been copied to your clipboard.",
+      });
+    } catch (err) {
+      toast({
+        title: "Failed to copy",
+        description: "Please copy the link manually.",
+        variant: "destructive",
+      });
+    }
+  };
+
+  const shareOnSocial = (platform: string) => {
+    const url = encodeURIComponent(window.location.href);
+    const title = encodeURIComponent(post?.title || "");
+    
+    const socialUrls = {
+      twitter: `https://twitter.com/intent/tweet?url=${url}&text=${title}`,
+      facebook: `https://www.facebook.com/sharer/sharer.php?u=${url}`,
+      linkedin: `https://www.linkedin.com/sharing/share-offsite/?url=${url}`,
+      email: `mailto:?subject=${title}&body=${url}`
+    };
+    
+    window.open(socialUrls[platform as keyof typeof socialUrls], '_blank');
+  };
 
   if (!post) {
     return (
-      <div className="min-h-screen bg-background flex items-center justify-center">
-        <div className="text-center">
-          <h1 className="text-2xl font-bold mb-4">Post Not Found</h1>
-          <Link to="/blog">
-            <Button>
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Blog
-            </Button>
-          </Link>
+      <div className="min-h-screen bg-gradient-hero">
+        <Header />
+        <div className="min-h-screen bg-background flex items-center justify-center">
+          <div className="text-center">
+            <h1 className="text-2xl font-bold mb-4">Post Not Found</h1>
+            <Link to="/blog">
+              <Button>
+                <ArrowLeft className="w-4 h-4 mr-2" />
+                Back to Blog
+              </Button>
+            </Link>
+          </div>
         </div>
+        <Footer />
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-gradient-hero">
+      <Header />
+      
       {/* Header Navigation */}
       <div className="border-b bg-card">
         <div className="container mx-auto px-4 py-4">
@@ -432,7 +472,78 @@ export default function BlogPost() {
                     </div>
                   </div>
                 </div>
+
+                {/* Social Share Buttons */}
+                <div className="flex items-center gap-4 pt-6">
+                  <span className="text-sm text-muted-foreground">Share:</span>
+                  <div className="flex gap-2">
+                    <Button 
+                      variant="ghost" 
+                      size="sm" 
+                      onClick={() => shareOnSocial('twitter')}
+                      className="hover:bg-blue-500/10"
+                    >
+                      <Twitter className="w-4 h-4" />
+                    </Button>
+                    <Button 
+                      variant="ghost" 
+                      size="sm" 
+                      onClick={() => shareOnSocial('facebook')}
+                      className="hover:bg-blue-600/10"
+                    >
+                      <Facebook className="w-4 h-4" />
+                    </Button>
+                    <Button 
+                      variant="ghost" 
+                      size="sm" 
+                      onClick={() => shareOnSocial('linkedin')}
+                      className="hover:bg-blue-700/10"
+                    >
+                      <Linkedin className="w-4 h-4" />
+                    </Button>
+                    <Button 
+                      variant="ghost" 
+                      size="sm" 
+                      onClick={() => shareOnSocial('email')}
+                      className="hover:bg-gray-500/10"
+                    >
+                      <Mail className="w-4 h-4" />
+                    </Button>
+                    <Button 
+                      variant="ghost" 
+                      size="sm" 
+                      onClick={copyToClipboard}
+                      className="hover:bg-gray-500/10"
+                    >
+                      <Copy className="w-4 h-4" />
+                    </Button>
+                  </div>
+                </div>
               </header>
+
+              {/* Key Takeaways - inspired by Fireflies */}
+              <Card className="mb-8 bg-gradient-to-r from-sky-tint/20 to-card border-sky-tint/30">
+                <CardContent className="p-6">
+                  <h2 className="text-xl font-bold text-foreground mb-4 flex items-center gap-2">
+                    <span className="w-2 h-2 bg-primary rounded-full"></span>
+                    Key Takeaways
+                  </h2>
+                  <ul className="space-y-2 text-muted-foreground">
+                    <li className="flex items-start gap-2">
+                      <span className="w-1.5 h-1.5 bg-primary rounded-full mt-2 flex-shrink-0"></span>
+                      <span>{post.description}</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="w-1.5 h-1.5 bg-primary rounded-full mt-2 flex-shrink-0"></span>
+                      <span>Essential strategies and best practices for modern teams</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="w-1.5 h-1.5 bg-primary rounded-full mt-2 flex-shrink-0"></span>
+                      <span>Actionable insights you can implement immediately</span>
+                    </li>
+                  </ul>
+                </CardContent>
+              </Card>
 
               {/* Article Body */}
               <div 
@@ -472,27 +583,47 @@ export default function BlogPost() {
                       <Share2 className="w-4 h-4" />
                       Share this post
                     </h3>
-                    <Button variant="outline" className="w-full">
-                      Copy Link
-                    </Button>
+                    <div className="space-y-2">
+                      <Button 
+                        variant="outline" 
+                        className="w-full justify-start" 
+                        onClick={copyToClipboard}
+                      >
+                        <Copy className="w-4 h-4 mr-2" />
+                        Copy Link
+                      </Button>
+                      <Button 
+                        variant="outline" 
+                        className="w-full justify-start" 
+                        onClick={() => shareOnSocial('twitter')}
+                      >
+                        <Twitter className="w-4 h-4 mr-2" />
+                        Twitter
+                      </Button>
+                      <Button 
+                        variant="outline" 
+                        className="w-full justify-start" 
+                        onClick={() => shareOnSocial('linkedin')}
+                      >
+                        <Linkedin className="w-4 h-4 mr-2" />
+                        LinkedIn
+                      </Button>
+                    </div>
                   </CardContent>
                 </Card>
 
-                {/* Table of Contents */}
-                <Card>
-                  <CardContent className="p-6">
-                    <h3 className="font-semibold mb-4">In this article</h3>
-                    <nav className="space-y-2 text-sm">
-                      <a href="#" className="block text-muted-foreground hover:text-foreground transition-colors">
-                        What's New with the Slack Integration
-                      </a>
-                      <a href="#" className="block text-muted-foreground hover:text-foreground transition-colors">
-                        Benefits for Your Team
-                      </a>
-                      <a href="#" className="block text-muted-foreground hover:text-foreground transition-colors">
-                        Getting Started
-                      </a>
-                    </nav>
+                {/* RecapGo Blog Promotion */}
+                <Card className="bg-gradient-to-br from-primary/10 to-sky-tint/20 border-primary/20">
+                  <CardContent className="p-6 text-center">
+                    <h3 className="font-semibold mb-2">RecapGo Blog</h3>
+                    <p className="text-sm text-muted-foreground mb-4">
+                      Check out the RecapGo blog to learn more about our product, customer stories, and our take on meetings, remote working, productivity, and more.
+                    </p>
+                    <Link to="/blog">
+                      <Button variant="default" size="sm" className="w-full">
+                        Visit RecapGo Blog
+                      </Button>
+                    </Link>
                   </CardContent>
                 </Card>
               </div>
@@ -500,6 +631,8 @@ export default function BlogPost() {
           </div>
         </div>
       </div>
+      
+      <Footer />
     </div>
   );
 }
